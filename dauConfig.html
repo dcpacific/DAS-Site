@@ -1,0 +1,1024 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<!--  - caller:   rwDAU.js - dauConfig()
+      - need to dynamically linked Frequency bands with buttons   
+-->
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Sirius Innovations Inc @ 2011</title>
+<script type = "text/javascript" src = "js/json2.js"></script>
+<script type = "text/javascript" src = "js/common.js"></script>
+<!-- script type = "text/javascript" src = "js/dauConfig.js"></script -->
+
+<script type="text/javascript">
+
+// Debug + Oct.24.2011
+function test() {
+//alert("window is tested  completely");
+    //----------------------------------------
+    // Retrieve content from caller
+    //----------------------------------------
+    var deviceID   = 0;
+    var l = location.href;
+// + Debug Oct.24.2011
+//alert(" -- within dauConfig.html - test - current location - "+l) ; 
+
+    var left = l.indexOf("?")+1;
+    //alert(" left - "+left);
+    var tmpstg = l.substring(left);
+    //alert(" tmpstg - "+tmpstg);
+// + Debug Oct.24.2011
+//alert(" -- within dauConfig.html - test - param from caller - "+tmpstg) ; 
+// add your code here
+
+//alert(" within  menu.html:initMenu() ... loc:"+location.href) ;
+// retrieve parameter
+    var url = location.href;
+    var theRequest = new Object();
+    if (url.indexOf("?") != -1) {
+        var str = url.substr(url.indexOf("?")+1);
+        strs = str.split("&");
+        for (var i = 0; i < strs.length; i++) {
+            theRequest[strs[i].split("=")[0]] = unescape(strs[i].split("=")[1]);
+        }
+    }
+    
+    // Init. var.
+    var DevName= "";
+// dau param
+    var RfBdTyp1, BTSiTyp1, RfBdTyp2, BTSiTyp2, RfBdTyp3, BTSiTyp3, RfBdTyp4, BTSiTyp4 ;
+    
+    
+    DevName = theRequest['DeviceName'];
+alert(" within  menu.html:initMenu() ... DAU Name: "+DevName) ;
+
+RfBdTyp1 = theRequest['RfBdTyp1']; 
+alert(" within  menu.html:initMenu() ... RfBdTyp1: "+RfBdTyp1) ;
+    BTSiTyp1 = theRequest['BTSiTyp1'];
+alert(" within  menu.html:initMenu() ... BTSiTyp1: "+BTSiTyp1) ;
+    RfBdTyp2 = theRequest['RfBdTyp2']; 
+alert(" within  menu.html:initMenu() ... RfBdTyp2: "+RfBdTyp2) ;
+    BTSiTyp2 = theRequest['BTSiTyp2'];
+alert(" within  menu.html:initMenu() ... BTSiTyp2: "+BTSiTyp2) ;
+    RfBdTyp3 = theRequest['RfBdTyp3']; 
+alert(" within  menu.html:initMenu() ... RfBdTyp3: "+RfBdTyp3) ;
+    BTSiTyp3 = theRequest['BTSiTyp3'];
+alert(" within  menu.html:initMenu() ... BTSiTyp3: "+BTSiTyp3) ;
+    RfBdTyp4 = theRequest['RfBdTyp4']; 
+alert(" within  menu.html:initMenu() ... RfBdTyp4: "+RfBdTyp4) ;
+    BTSiTyp4 = theRequest['BTSiTyp4'];
+alert(" within  menu.html:initMenu() ... BTSiTyp4: "+BTSiTyp4) ;
+
+
+}
+//window.onload = test;
+
+//==============================================================================
+// function UptDAUCfgLbl                              + Nov.14.2011
+// note: routine RFBdType() defined at common.js
+//==============================================================================
+function UptDAUCfgLbl() {
+
+    // Init. var.
+    var id;
+    var DevName= "";
+    var RfBdTyp1, BTSiTyp1, RfBdTyp2, BTSiTyp2, RfBdTyp3, BTSiTyp3, RfBdTyp4, BTSiTyp4 = "" ;
+    var url = location.href;
+    var theRequest = new Object();
+
+    if (url.indexOf("?") != -1) {
+        var str = url.substr(url.indexOf("?")+1);
+        strs = str.split("&");
+        for (var i = 0; i < strs.length; i++) {
+            theRequest[strs[i].split("=")[0]] = unescape(strs[i].split("=")[1]);
+        }
+    }
+
+//----------------------------------------
+// DAU Device Name
+//----------------------------------------
+    DevName = theRequest['DeviceName'];
+    id = document.getElementById('0x702') ;
+    if (id) {
+//      id.innerHTML = DevName;
+        id.value = DevName;
+    }
+    
+//----------------------------------------
+// Frequency
+//----------------------------------------
+    RfBdTyp1 = theRequest['RfBdTyp1']; 
+    id = document.getElementById('DAUcfgRfBdTyp1') ;
+    if (id) {
+        id.value = RFBdType(parseInt(RfBdTyp1));
+
+    }
+    
+    RfBdTyp2 = theRequest['RfBdTyp2']; 
+    id = document.getElementById('DAUcfgRfBdTyp2') ;
+    if (id) {
+        id.value = RFBdType(parseInt(RfBdTyp2));
+    }
+    
+    RfBdTyp3 = theRequest['RfBdTyp3']; 
+    id = document.getElementById('DAUcfgRfBdTyp3') ;
+    if (id) {
+        id.value = RFBdType(parseInt(RfBdTyp3));
+    }
+    
+    RfBdTyp4 = theRequest['RfBdTyp4']; 
+    id = document.getElementById('DAUcfgRfBdTyp4') ;
+    if (id) {
+        id.value = RFBdType(parseInt(RfBdTyp4));
+    }
+
+//----------------------------------------
+// Interface Type
+//----------------------------------------
+    BTSiTyp1 = theRequest['BTSiTyp1'];
+    id = document.getElementById('DAUcfgBTSiTyp1') ;
+    if (id) {
+//alert(" -- BTSiTyp1: "+BTSiTyp1);
+        if (BTSiTyp1=="0") {          
+            id.value = "Simplex" ;  
+        } else {
+          id.value = "Duplex" ;  
+        }
+    }
+
+    BTSiTyp2 = theRequest['BTSiTyp2'];
+    id = document.getElementById('DAUcfgBTSiTyp2') ;
+    if (id) {
+        if (BTSiTyp2=="0") {          
+            id.value = "Simplex" ;  
+        } else {
+          id.value = "Duplex" ;  
+        }
+    }
+    
+    BTSiTyp3 = theRequest['BTSiTyp3'];
+    id = document.getElementById('DAUcfgBTSiTyp3') ;
+    if (id) {
+        if (BTSiTyp3=="0") {          
+            id.value = "Simplex" ;  
+        } else {
+          id.value = "Duplex" ;  
+        }
+    }
+
+    BTSiTyp4 = theRequest['BTSiTyp4'];
+    id = document.getElementById('DAUcfgBTSiTyp4') ;
+    if (id) {
+        if (BTSiTyp4=="0") {          
+            id.value = "Simplex" ;  
+        } else {
+          id.value = "Duplex" ;  
+        }
+    }
+    
+//----------------------------------------
+// Buttons pay attention to Frequency
+//----------------------------------------
+    
+
+}
+
+
+//==============================================================================
+// function initDAUCfg
+//==============================================================================
+function initDAUCfg() {
+
+    // focused on DAU name when start up
+    var showTest = document.getElementById('0x702');
+    if (showTest){
+        showTest.focus();
+    } 
+    
+    //----------------------------------------
+    // Update Band 1 to 4 Frequency and Interface Type
+    //----------------------------------------
+    UptDAUCfgLbl();
+    
+    //----------------------------------------
+    // retrieved DAU Name, BTS Sector Selection and Interface Setup
+    //----------------------------------------
+    readData('php/rwParas.php');
+// + Nov.28.2011
+//    readData('php/rwParas2.php');
+
+}
+ 
+//==============================================================================
+// function setSubBand2
+//==============================================================================
+function setSubBand2(subband) {
+
+    var urlStr;
+    
+// debug
+alert(' -- within setSubBand2() : subband -'+subband ); 
+    //----------------------------------------
+    // Retrieve content from caller
+    //----------------------------------------
+    var l = location.href;
+    var left = l.indexOf("?")+1;
+    var param = l.substring(left);
+// 
+    if ('2' == subband) {
+// PCS 1900        
+        urlStr = "subBand.html?" +  param;
+    } else if ('3' == subband) {
+//AWS        
+        urlStr = "subBandAWS.html?" +  param;
+    }
+    window.location.href = urlStr;
+
+}
+
+//==============================================================================
+// function setSubBand3
+//==============================================================================
+function setSubBand3 (sband, bno, cid) {
+    
+    // init local var.
+    var DvNm = "" ;
+    var param= "dvnm=" ;
+     
+    // Device Name
+    id = document.getElementById('0x702') ;
+    if (id) {
+        DvNm = id.value ;
+    }
+    param = param + DvNm ;
+
+    if ('2' == sband) {
+// PCS 1900        
+        urlStr = "subBand.html?" +  param;
+    } else if ('3' == sband) {
+//AWS        
+        urlStr = "subBandAWS.html?" +  param;
+    }
+
+// band no    
+    urlStr = urlStr + "&bno="+bno ;
+// caller     
+    urlStr = urlStr + "&cid="+cid ;
+    
+    window.location.href = urlStr;
+
+    
+}
+
+//==============================================================================
+// function ChkBuf flagged if the Object ID is processed
+//==============================================================================
+function ChkBuf(inBuf,ObjID,band) {
+    
+//alert(" -- within ChkBuf - Oid:"+ObjID+" - band: "+band+" ");
+
+        for(i=0;i<inBuf.length;i++) { 
+            if ((inBuf[i][0] == ObjID) && (inBuf[i][2] == band)) {
+               inBuf[i][1] = 1;  
+            }     
+        }
+}
+
+
+//==============================================================================
+// function respDAUCfg simply Aknowledges, no return content for update 
+// caller : writeDAUCfg()
+// 
+// note   : returned MQ dedicated to DAU Configure and Reboot 
+//==============================================================================
+function respDAUCfg(responseText,inBuf) {
+
+// Debug + Oct.07.2011
+//    alert(" -- within respDAUCfg - responseText :"+ responseText);
+	
+	var rData = JSON.parse(responseText);
+	var showTest;
+	var targetID;
+        var StgFld, StgFlag ;
+	
+// + Debug Oct.07.2011
+//alert(" -- within respDAUCfg -- rData.length : " + rData.length) ;
+//-----------------------------------------
+// clone and init. the working array
+// working buffer clone the same structure as in coming buffer, id-content-band, and
+// replace structure as id-flag_to_tell_if_processed-band 
+//-----------------------------------------
+        var wkBuf = inBuf.slice(0);
+        for(i=0;i<wkBuf.length;i++) { wkBuf[i][1] = 0 ; }
+
+// dump the content of the working buffer
+//var msg = "";
+//for(i=0;i<wkBuf.length;i++) { msg += wkBuf[i] + "\n"; }
+//alert(msg);
+	
+var StgRpt = "";	
+    for (i = 0; i < rData.length; i++) {
+
+// + Debug Oct.07.2011
+//alert(" -- within respMQ - i: "+i+" rData OID: " + rData[i]['OID']) ;
+
+        switch (rData[i]['OID']) {
+// DAU name
+            case 0x702:
+// BTS Sector Selection            
+            case 0x710:
+// Interface Setup
+            case 0x711:
+            case 0x712:
+            case 0x717: 
+// field Object ID	    
+                StgFld = rData[i]['OID'].toString(16) ;
+// content  
+                StgFlag= rData[i]['Content'].toString(16) ;
+
+                targetID = '0x' + rData[i]['OID'].toString(16) + '_' + rData[i]['npCmd'].toString();
+                showTest = document.getElementById(targetID);
+                if (showTest) {
+//			showTest.value = rData[i]['Content'];
+                   StgRpt = StgRpt + " ; field " + targetID + "-" + StgFlag + " " ;
+// flag obj is processed 
+//                   ChkBuf(wkBuf,rData[i]['OID'],rData[i]['npCmd']);
+		} else {
+//alert(" -- data error "+targetID);                    
+                    StgRpt = StgRpt + " ; field " + targetID + " RX error ! " ;
+
+                }
+               break;
+//---------------------
+// Reboot
+//---------------------
+            case 0x703:
+// content  
+                    StgFlag= rData[i]['Content'].toString(16) ;
+                    StgRpt = StgRpt + " Reboot - " + StgFlag + " " ;
+               break;
+// unknown data               
+            default:
+                targetID = '0x' + rData[i]['OID'].toString(16) + '_' + rData[i]['npCmd'].toString();
+                StgRpt = StgRpt + " ; ** " + targetID + " RX error ! " ;
+	    
+        }
+//alert("StgRpt : "+StgRpt);        
+    }
+//---------------------------------
+// notify user what the outcome
+//---------------------------------
+    document.getElementById('dauCfgMsg').innerHTML = " Write Update: " + StgRpt ;
+// dump the content of the working buffer
+//var msg = "";
+//for(i=0;i<wkBuf.length;i++) { msg += wkBuf[i] + "\n"; }
+//alert(msg);
+
+
+}
+
+//==============================================================================
+// function writeDAUCfg is based on rwDAU.js::writeData() 
+// caller : dauConfig.html 
+// callee : respDAUCfg()
+//==============================================================================
+function writeDAUCfg(dataSource, type) {
+    
+    if (type==1) {
+        document.getElementById('dauCfgMsg').innerHTML = "Updating DAU Config to device ... Please wait";
+    }
+    if (type==0) {
+        document.getElementById('dauCfgMsg').innerHTML = "Rebooting DAU device          ... Please wait";
+    }
+//+-----------------------------------------------------------------------------
+//| Check Browser and Open Ajax channel 
+//+-----------------------------------------------------------------------------
+    var XMLHttpRequestObject = false;
+    if (window.XMLHttpRequest) {
+        XMLHttpRequestObject = new XMLHttpRequest();
+    } else if (window.ActiveXObject) {
+        XMLHttpRequestObject = new ActiveXObject("Microsoft.XMLHTTP");
+    }
+    if (XMLHttpRequestObject) {
+
+//	    XMLHttpRequestObject.open("POST", dataSource, false);  //send the request synchronously 
+	//+-------------------------------------------------------------------------------
+        //|  if use async=false, do NOT write an onreadystatechange function - just put the code after the send() statement:
+	//+-----------------------------------------------------------------------------
+	XMLHttpRequestObject.open("POST", dataSource, true);  //send the request synchronously 
+	    
+// + Debug 29.sep.2011
+//        alert(" within writeDAUCfg()- Ajax open channel ..." ) ; 
+//+-----------------------------------------------------------------------------
+//| Return Message Block 
+//+-----------------------------------------------------------------------------
+       XMLHttpRequestObject.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+        XMLHttpRequestObject.onreadystatechange = function() {
+            if (XMLHttpRequestObject.readyState == 4 &&
+              XMLHttpRequestObject.status == 200) {
+
+//        alert(" within writeDAUCfg()- Ajax open channel - responseText : " + XMLHttpRequestObject.responseText);
+//------------------------------------------------------------------------------
+// In terms of write, if SET is ok, notify but no message update
+//------------------------------------------------------------------------------
+                respDAUCfg(XMLHttpRequestObject.responseText,sArray);
+            }
+        }
+
+        var oidArray = new Array();
+        var sArray   = new Array();
+        //-----------------------------
+        // Reboot - 0x703  
+        //-----------------------------
+        if (type==0) {
+            
+            var bandId  = 0;
+            oidArray[0] = 0x703;
+            sArray[0] = new Array(oidArray[0],"", bandId);
+        }
+
+//-------------------------------
+// DAU Configure 
+//-------------------------------
+        if (type==1) {
+//+-----------------------------------------------------------------------------
+// create the oid array with npCmd setting before submitting to Message Queue
+// note: 0x702 - DAU name
+//       0x710 - BTS Sector selection
+//       0x711 - Interface Setup - TX
+//       0x712 - Interface Setup - RX
+//       0x717 - Interface Setup - RxD
+//+-----------------------------------------------------------------------------
+            oidArray = new Array(0x702, 0x710, 0x711, 0x712, 0x717);
+//          var sArray = new Array;
+            var index = 0; //index for sArray
+
+// 4 band for BTS Sector Selection , Interface setup, and 1 DAU Name
+            var band = 1;  
+            var maxband = 4;
+            var flag = true;
+            var tmpStg = '';
+            var tmpValue = 0;
+
+            for (j = band; j <= maxband; j++) {
+//=
+//alert("- j - "+j);
+
+                for (i = 0; i < oidArray.length; i++) {
+                    switch (oidArray[i]){
+// BTS Sector Selection 
+                        case 0x710:
+//alert("oid is "+oidArray[i]);
+//                        targetID = '0x' + oidArray[i].toString(16) + '_' + (j - 1).toString();
+                            targetID = '0x' + oidArray[i].toString(16) + '_' + j.toString();
+                            showTest = document.getElementById(targetID);
+                            if (showTest) {
+//                            var e = new Array(oidArray[i], showTest.value, j - 1);
+                             var e = new Array(oidArray[i], showTest.value, j);
+                                sArray[index] = e;
+                                index++;
+//retain user entered value
+//showTest.value = '';
+                            }
+                            break;
+// Interface setup 
+                        case 0x711:
+                        case 0x712:
+                        case 0x717:
+//alert("oid is "+oidArray[i]);
+//                        targetID = '0x' + oidArray[i].toString(16) + '_' + (j - 1).toString();
+                            targetID = '0x' + oidArray[i].toString(16) + '_' + j.toString();
+//alert("targetID is "+targetID);
+                            showTest = document.getElementById(targetID);
+//alert("targetID value is "+showTest.value);
+//alert("targetID checked is "+showTest.checked);
+                            if (showTest) {
+                                if (showTest.checked) {
+                                    tmpValue = 1;
+                                } else {
+                                    tmpValue = 0;
+                                }
+//                            var e = new Array(oidArray[i], tmpValue, j - 1);
+                                var e = new Array(oidArray[i], tmpValue, j);
+                                sArray[index] = e;
+                                index++;
+//retain user entered value
+//showTest.value = '';
+                            }
+                            break;
+
+// DAU Name - restrict to only 1 DAU name
+                        default:
+                            if (flag) {
+                                targetID = '0x' + oidArray[i].toString(16); 
+                                showTest = document.getElementById(targetID);
+                                if (showTest) {
+// set RF Band to zero - no Band associated to DAU name                                
+                                    var e = new Array(oidArray[i], showTest.value, j-1);
+                                    sArray[index] = e;
+                                    index++;
+                                    showTest.value = '';
+                                } else {
+                                    alert(" -- writeDAUCfg - DAU name Error");
+                                }
+//
+                                flag = false;
+                            }                                                   // end if
+
+                        }                                                       // end switch
+
+                     }                                                          // end for
+//=
+                 }                                                              // end for
+// + Debug - to dump array
+//var msg = " - SArray contents\n"; 
+//for(i=0;i<sArray.length;i++) { msg += sArray[i] + "\n"; }
+//alert(msg);  
+//=============================================================================        
+        }                        // end if 
+
+        
+        var data = JSON.stringify(sArray);
+        //======================================================================
+        // Obtain the Station ID, Device ID amd Device Mode from caller
+        //======================================================================
+        var l = location.href;
+        var left = l.indexOf("?")+1;
+        var param = l.substring(left);
+// 
+// Debug + OCT.25.2011
+//alert(" pass param: "+'data=' + data + '&type=write' + '&' + param) ;        
+//        XMLHttpRequestObject.send('data=' + data + '&type=write' + '&sid=' + stationID + '&did=' + deviceID);
+        XMLHttpRequestObject.send('data=' + data + '&type=write' + '&' + param);
+	
+    }
+}
+
+
+//==============================================================================
+// function readData
+// callee : fillParas()
+//==============================================================================
+function readData(dataSource) {
+    document.getElementById('dauCfgMsg').innerHTML = "Loading data from device...";
+
+//+-----------------------------------------
+//| Check Browser and Open Ajax channel 
+//+-----------------------------------------
+    var XMLHttpRequestObject = false;
+    if (window.XMLHttpRequest) {
+        XMLHttpRequestObject = new XMLHttpRequest();
+    } else if (window.ActiveXObject) {
+        XMLHttpRequestObject = new ActiveXObject("Microsoft.XMLHTTP");
+    }
+    if (XMLHttpRequestObject) {
+        XMLHttpRequestObject.open("POST", dataSource);
+	    
+// + Debug 29.sep.2011
+//alert(" within readData()- Ajax open channel for DAU Cfg..." ) ; 
+//+-----------------------------------------
+//| Return Message Block 
+//+-----------------------------------------
+        XMLHttpRequestObject.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+        XMLHttpRequestObject.onreadystatechange = function() {
+            if (XMLHttpRequestObject.readyState == 4 &&
+              XMLHttpRequestObject.status == 200) {
+
+// + Debug 29.sep.2011
+//alert(" -- within subBand.js - readData() - Ajax open channel - responseText : " + XMLHttpRequestObject.responseText);
+                fillParas(XMLHttpRequestObject.responseText);
+		}
+        }
+
+//        var oidArray = new Array();
+//	oidArray[0] = 0x4d1;
+//+-----------------------------------------
+//| create the oid array with npCmd setting
+//| note: DAU Name - 0x702
+//|       BTS Sector Selection - 0x710
+//|       Interface Set up     - 0x711, 0x712, 0x717 
+//+-----------------------------------------
+        var oidArray = new Array(0x702, 0x710, 0x711, 0x712, 0x717);
+		
+        var sArray = new Array;
+        var index = 0; //index for sArray
+        var band  = 1;
+        var maxband = 4;
+
+        for (i = 0; i < oidArray.length; i++) {
+//alert("Obj Id: "+oidArray[i]);
+//alert(" i:"+i);            
+            if (oidArray[i] == 0x702) {
+// one DAU Name
+                var e = new Array(oidArray[i], band-1);
+                sArray[index] = e;
+                index++;
+            } else {
+// multiple BTS Sector Selection and Interface Set up
+                for (j=band;j<=maxband;j++) {
+//alert(" j: "+j);            
+                   sArray[index] = new Array(oidArray[i],j);
+                   index++;
+                }
+            }    
+        }
+
+//alert(" -- dump array of data send --\n");
+//var msg = "";
+//for(i=0;i<sArray.length;i++) { msg += sArray[i] + "\n"; }
+//alert(msg);
+
+        var data = JSON.stringify(sArray);
+//+-----------------------------------------
+//| rxParam() retrieves Device ID, StationID, Device Mode
+//+-----------------------------------------
+//        XMLHttpRequestObject.send('data=' + data + '&type=read' + '&sid=' + stationID + '&did=' + deviceID);
+        XMLHttpRequestObject.send('data=' + data + '&type=read&' + rxParam());
+
+//+-----------------------------------------
+//| Clean up existing Check Boxes 
+//+-----------------------------------------
+        for (i = 0; i < iBands; i++) {
+            document.getElementById(bandArray[i].name).checked = "";
+        }
+	
+    }
+}
+
+//==============================================================================
+//  function fillParas
+//==============================================================================
+function fillParas(responseText) {
+    
+// Debug + Oct.07.2011
+//alert(" -- within fillParas - responseText :"+ responseText);
+    var rData = JSON.parse(responseText);
+    var targetID;
+    var subBandString;
+    var StgRpt = "";	
+    
+//alert(" array length: " + rData.length) ;    
+
+    for (i = 0; i < rData.length; i++) {
+        switch (rData[i]['OID']) {
+//one DAU Name
+            case 0x702:
+// multiple BTS Sector Selection
+            case 0x710:
+                if (rData[i]['OID'] == 0x702) {
+                    targetID = '0x' + rData[i]['OID'].toString(16) ;
+                } else {
+                    targetID = '0x' + rData[i]['OID'].toString(16) + '_' + rData[i]['npCmd'].toString();
+                }
+ // content  
+                StgFlag= rData[i]['Content'].toString(16) ;
+//
+//alert("obj Id:"+targetID+" - content: "+StgFlag);
+                showTest = document.getElementById(targetID);
+                if (showTest) {
+                    showTest.value = rData[i]['Content'];
+                   StgRpt = StgRpt + " ; field " + targetID + "-ok ";
+                } else {
+//                  alert(" -- fillParas -- Data error:" + targetID);
+//                  DAUErrRpt(" -- fillParas -- Data error:" + targetID);
+                    StgRpt = StgRpt + " ; field " + targetID + " RX error ! " ;
+                }
+                break;
+// multiple Interface Set up            
+            case 0x711: 
+            case 0x712:
+            case 0x717:
+                targetID = '0x' + rData[i]['OID'].toString(16) + '_' + rData[i]['npCmd'].toString();
+ // content  
+                StgFlag= rData[i]['Content'].toString(16) ;
+//alert("obj Id:"+targetID+" - content: "+StgFlag);
+                showTest = document.getElementById(targetID);
+                if (showTest) {
+                    if (1 == rData[i]['Content']) {
+                        showTest.checked = "checked";
+                    } else {
+                        showTest.checked = "";
+                    }
+                   StgRpt = StgRpt + " ; field " + targetID + "-ok ";
+                } else {
+//                    DAUErrRpt(" -- fillParas -- Data error:" + targetID);
+                    StgRpt = StgRpt + " ; field " + targetID + " RX error ! " ;
+                }
+// Debug
+//alert(" StgRpt : "+StgRpt);                
+                break;
+            default:
+                targetID = '0x' + rData[i]['OID'].toString(16) + '_' + rData[i]['npCmd'].toString();
+//                StgRpt = StgRpt + " ; ** " + targetID + " RX error ! " ;                
+//alert("obj Id:"+targetID+" - StgRpt: "+StgRpt);
+        }
+    }
+
+
+    // mark the updating time
+    var dt = new Date();
+    document.getElementById('dauCfgMsg').innerHTML = "result: "+StgRpt+" - last Update: " + dt.toString();
+}
+
+
+//==============================================================================
+// function DAUErrRpt flags error and display warning below label 'DAU'
+//==============================================================================
+function DAUErrRpt(stg) {
+   var id = document.getElementById('ErrDiv') ;
+    id.style.background = '' ;
+    id.innerHTML = stg;
+    id.style.background = '#dedede' ;
+//    sleep(2000);
+    id.style.background = '' ;
+
+}
+
+
+</script>
+
+<script language="javascript" type="text/javascript"></script>
+<link rel="stylesheet" type="text/css" href="style/device.css" />
+<!--<style type="text/css">
+talbe.colTable
+{
+    border-collapse:separate;
+    border:0px;
+    border-style:none;
+}
+</style>-->
+</head>
+<body onload="initDAUCfg()">
+    
+
+<!--  + Oct.24.2011 -->
+<table border="0" cellspacing="0" cellpadding="0"> 
+<tr><td><h1>DAU Configuration</h1></td><td>&nbsp;</td></tr>
+<!--  block to acknowledge user if the SET is successful   -->
+<tr><td><div id= "dauCfgMsg">&nbsp;</div></td></tr>
+<tr><td><div id= "ErrDiv"> &nbsp; </div></td></tr>
+</table>
+<!-- -->    
+<div id = "msgDiv" >
+    <table class="bandTable" border="1">
+<!-- + OCT.25.2011 -->        
+        <tr><td>DAU Name/Label: <input id="0x702" name="DAU_Name" type="text" class="normalInupt"/></td><td>
+            <input id="Button5" type="button" value="Reboot" onclick = "writeDAUCfg('php/rwnCfg.php',0);"/></td></tr>
+    </table>
+</div><br/>
+
+<div>
+    <table class="bandTable" border="1">
+        <tr>
+            <td>&nbsp;</td>
+            <td>Frequency</td>
+            <td>Interface Type</td>
+            <td>BTS Sector Selection</td>
+            <td>Interface Setup</td>
+            <td>&nbsp;</td>
+        </tr>
+<!-------------------------------------------------------------------------- Band Type 1 -------------------------------------------------------------------------->            
+        <tr id = "1">
+            <td>Band 1:</td>
+            <td><input id="DAUcfgRfBdTyp1" type="text" readonly="readonly" class="readonlyInput" value="700"/></td>
+            <td><input id="DAUcfgBTSiTyp1" type="text" readonly="readonly" class="readonlyInput" value="S"/></td>
+<!-- BTS Sector Selection + OCT.25.2011 --> 
+            <td><input id="0x710_1" name="Text3" type="text" class="normalInupt"/></td>
+            <td>
+<!-- Interface Setup temporary not supported + OCT.25.2011 --> 
+                <input id="0x711_1" name="Checkbox1" type="checkbox" />TX
+                <input id="0x712_1" name="Checkbox2" type="checkbox" />RX
+                <input id="0x717_1" name="Checkbox3" type="checkbox" />RxD
+            </td>
+<!---------- button 1 ---------->            
+        <SCRIPT LANGUAGE="javascript">
+            // Init. var.
+
+	    var k, m;
+            var tmpStg ;
+            var url = location.href;
+            var theRequest = new Object();
+ 
+            if (url.indexOf("?") != -1) {
+                var str = url.substr(url.indexOf("?")+1);
+                strs = str.split("&");
+                for (var i = 0; i < strs.length; i++) {
+                    theRequest[strs[i].split("=")[0]] = unescape(strs[i].split("=")[1]);
+                }
+            }
+// Band Type 1
+            RfBdTyp1 = theRequest['RfBdTyp1']; 
+            document.write("<td>");
+            k = parseInt(RfBdTyp1);
+            
+//alert(" ** button 1: RfBdTyp1=" +RfBdTyp1+" - k:"+k.toString());
+// note: routine RFBdType() defined at common.js
+  
+            if ((k==2) || (k==3)) {
+                
+               m =  RFBdType(parseInt(RfBdTyp1)) ;
+               document.write("<input id='Button1' ");
+               document.write("type='button' ");
+               document.write("value='");
+               document.write(m);
+               document.write(" Sub-Band Selection' ");
+               
+// setSubBand3 (sband, bno, cid)
+               tmpStg = "onclick='setSubBand3(" + RfBdTyp1 + "," +"1"+ "," +"0"+");' " ;
+               document.write(tmpStg);
+               
+               document.write(" />");
+            
+            } else {
+	    	document.write("&nbsp;");
+            }
+            
+            document.write("</td>");
+//-----------------------------------------------------------------------------------------???
+//<input id="Button1" type="button" value="1900 Sub-Band Selection" onclick="setSubBand('1900');" />
+//-----------------------------------------------------------------------------------------???
+        </SCRIPT> 
+        </tr>
+<!-------------------------------------------------------------------------- Band Type 2 -------------------------------------------------------------------------->            
+        <tr id = "2">
+            <td>Band 2:</td>
+            <td><input id="DAUcfgRfBdTyp2" type="text" readonly="readonly" class="readonlyInput" value="850"/></td>
+            <td><input id="DAUcfgBTSiTyp2" type="text" readonly="readonly" class="readonlyInput" value="S"/></td>
+<!-- BTS Sector Selection + OCT.25.2011 --> 
+            <td><input id="0x710_2" name="Text7" type="text" class="normalInupt"/></td>
+            <td>
+<!-- Interface Setup temporary not supported + OCT.25.2011 --> 
+                <input id="0x711_2" name="Checkbox4" type="checkbox" />TX
+                <input id="0x712_2" name="Checkbox5" type="checkbox" />RX
+                <input id="0x717_2" name="Checkbox6" type="checkbox" />RxD
+            </td>
+<!---------- button 2 ---------->
+        <SCRIPT LANGUAGE="javascript">
+            // Init. var.
+
+	    var k,m ;
+            var url = location.href;
+            var theRequest = new Object();
+ 
+            if (url.indexOf("?") != -1) {
+                var str = url.substr(url.indexOf("?")+1);
+                strs = str.split("&");
+                for (var i = 0; i < strs.length; i++) {
+                    theRequest[strs[i].split("=")[0]] = unescape(strs[i].split("=")[1]);
+                }
+            }
+// Band Type 2
+            RfBdTyp2 = theRequest['RfBdTyp2']; 
+            document.write("<td>");
+            k = parseInt(RfBdTyp2);
+// alert(" ** button 1: RfBdTyp1=" +RfBdTyp1+" - k:"+k.toString());
+// note: routine RFBdType() defined at common.js
+
+            if ((k==2) || (k==3)) {
+                
+               m = RFBdType(parseInt(RfBdTyp2));
+               document.write("<input id='Button2' ");
+               document.write("type='button' ");
+               document.write("value='");
+               document.write(m);
+               document.write(" Sub-Band Selection' ");
+               
+// setSubBand3 (sband, bno, cid)
+               tmpStg = "onclick='setSubBand3(" + RfBdTyp2 + "," +"2"+ "," +"0"+");' " ;
+               document.write(tmpStg);
+               
+               document.write(" />");
+            
+            } else {
+	    	document.write("&nbsp;");
+            }
+            
+            document.write("</td>");
+        </SCRIPT> 
+<!-- td>&nbsp;</td  -->
+        </tr>
+<!-------------------------------------------------------------------------- Band Type 3 -------------------------------------------------------------------------->            
+        <tr id = "3">
+            <td>Band 3:</td>
+            <td><input id="DAUcfgRfBdTyp3"  type="text" readonly="readonly" class="readonlyInput" value="1900"/></td>
+            <td><input id="DAUcfgBTSiTyp3" type="text" readonly="readonly" class="readonlyInput" value="S"/></td>
+<!-- BTS Sector Selection + OCT.25.2011 --> 
+            <td><input id="0x710_3" name="Text11" type="text" class="normalInupt"/></td>
+            <td>
+<!-- Interface Setup temporary not supported  + OCT.25.2011 --> 
+                <input id="0x711_3" name="Checkbox7" type="checkbox" />TX
+                <input id="0x712_3" name="Checkbox8" type="checkbox" />RX
+                <input id="0x717_3" name="Checkbox9" type="checkbox" />RxD
+            </td>
+<!---------- button 3 ---------->            
+        <SCRIPT LANGUAGE="javascript">
+            // Init. var.
+
+	    var k,m, tmpStg ;
+            var url = location.href;
+            var theRequest = new Object();
+ 
+            if (url.indexOf("?") != -1) {
+                var str = url.substr(url.indexOf("?")+1);
+                strs = str.split("&");
+                for (var i = 0; i < strs.length; i++) {
+                    theRequest[strs[i].split("=")[0]] = unescape(strs[i].split("=")[1]);
+                }
+            }
+// Band Type 3
+            RfBdTyp3 = theRequest['RfBdTyp3']; 
+            document.write("<td>");
+            k = parseInt(RfBdTyp3);
+
+            if ((k==2) || (k==3)) {
+                
+               m = RFBdType(parseInt(RfBdTyp3)) ;
+//DEBUG
+//alert(" ** button 3: RfBdTyp3=" +RfBdTyp3+" - k:"+k.toString()+" - m:"+m);
+               document.write("<input id='Button3' ");
+               document.write("type='button' ");
+               document.write("value='");
+               document.write(m);
+               document.write(" Sub-Band Selection' ");
+               
+// setSubBand3 (sband, bno, cid)
+               tmpStg = "onclick='setSubBand3(" + RfBdTyp3 + "," +"3"+ "," +"0"+");' " ;
+               document.write(tmpStg);
+               
+               document.write(" />");
+            
+            } else {
+	    	document.write("&nbsp;");
+            }
+            
+            document.write("</td>");
+        </SCRIPT> 
+            
+        </tr>
+<!-------------------------------------------------------------------------- Band Type 4 -------------------------------------------------------------------------->            
+        <tr id = "4">
+            <td>Band 4:</td>
+            <td><input id="DAUcfgRfBdTyp4" type="text" readonly="readonly" class="readonlyInput" value="AWS"/></td>
+            <td><input id="DAUcfgBTSiTyp4" type="text" readonly="readonly" class="readonlyInput" value="S"/></td>
+<!-- BTS Sector Selection + OCT.25.2011 --> 
+            <td><input id="0x710_4" name="Text15" type="text" class="normalInupt"/></td>
+            <td>
+<!-- Interface Setup  temporary not supported  + OCT.25.2011 --> 
+                <input id="0x711_4" name="Checkbox10" type="checkbox" />TX
+                <input id="0x712_4" name="Checkbox11" type="checkbox" />RX
+                <input id="0x717_4" name="Checkbox12" type="checkbox" />RxD
+            </td>
+<!---------- button 4 ---------->            
+        <SCRIPT LANGUAGE="javascript">
+            // Init. var.
+
+	    var k,m, tmpStg ;
+            var url = location.href;
+            var theRequest = new Object();
+ 
+            if (url.indexOf("?") != -1) {
+                var str = url.substr(url.indexOf("?")+1);
+                strs = str.split("&");
+                for (var i = 0; i < strs.length; i++) {
+                    theRequest[strs[i].split("=")[0]] = unescape(strs[i].split("=")[1]);
+                }
+            }
+// Band Type 4
+            RfBdTyp4 = theRequest['RfBdTyp4']; 
+            document.write("<td>");
+            k = parseInt(RfBdTyp4);
+
+            if ((k==2) || (k==3)) {
+                
+               m = RFBdType(parseInt(RfBdTyp4)) ; 
+//DEBUG
+//alert(" ** button 4: RfBdTyp4=" +RfBdTyp4+" - k:"+k.toString()+" - m:"+m);
+               document.write("<input id='Button4' ");
+               document.write("type='button' ");
+               document.write("value='");
+               document.write(m);
+               document.write(" Sub-Band Selection' ");
+               
+// setSubBand3 (sband, bno, cid)
+               tmpStg = "onclick='setSubBand3(" + RfBdTyp4 + "," +"4"+ "," +"0"+");' " ;
+               document.write(tmpStg);
+               
+               document.write(" />");
+            
+            } else {
+	    	document.write("&nbsp;");
+            }
+            
+            document.write("</td>");
+        </SCRIPT> 
+            
+        </tr>
+<!-- tr><td colspan="6"><input id="Button4" type="button" value="Set Parameters" onclick="writeDAUCfg('php/rwDAUCfg.php');"/></td></tr  -->
+        <tr><td colspan="6"><input id="Button4" type="button" value="Set Parameters" onclick="writeDAUCfg('php/rwnCfg.php',1);"/></td></tr>
+    </table>
+</div>
+</body>
+</html>
+
+

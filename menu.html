@@ -1,0 +1,539 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>Tree Menu</title>
+<link rel="stylesheet" type="text/css" href="style/device.css" />
+<!-- + Nov.09.2011 -->    
+<SCRIPT LANGUAGE="javascript">
+    
+//------------------------------------------------------------------------------
+// Update Log:
+//    - synchronize with index.html, ntfMain.php to archive individual DRU NetwkIP  + Nov.15.2011
+//------------------------------------------------------------------------------
+    
+//==============================================================================
+// function initMenu
+//==============================================================================
+    function initMenu() {
+
+alert(" within  menu.html:initMenu() ... loc:"+location.href) ;
+           
+    var url = location.href;
+    var theRequest = new Object();
+    if (url.indexOf("?") != -1) {
+        var str = url.substr(url.indexOf("?")+1);
+        strs = str.split("&");
+        for (var i = 0; i < strs.length; i++) {
+            theRequest[strs[i].split("=")[0]] = unescape(strs[i].split("=")[1]);
+        }
+    }
+    
+    // Init. var.
+    var DRUCnt = 0;
+    var DevName= DevName_01= DevName_02= DevName_03= DevName_04= DevName_05= DevName_06="";
+// dau param
+    var DAUdevID, BandCnt, IOdoor, RfBdTyp1, BTSiTyp1, RfBdTyp2, BTSiTyp2, RfBdTyp3, BTSiTyp3, RfBdTyp4, BTSiTyp4 ;
+// dru param
+    var IOdoor_01,IOdoor_02,IOdoor_03,IOdoor_04,IOdoor_05,IOdoor_06 ;
+// RF Band Type    
+    var R1_01,R1_02,R1_03,R1_04,R1_05,R1_06 ;
+    var R2_01,R2_02,R2_03,R2_04,R2_05,R2_06 ;
+    var R3_01,R3_02,R3_03,R3_04,R3_05,R3_06 ;
+    var R4_01,R4_02,R4_03,R4_04,R4_05,R4_06 ;
+// Payr
+    var Y1_01,Y1_02,Y1_03,Y1_04,Y1_05,Y1_06 ;
+    var Y2_01,Y2_02,Y2_03,Y2_04,Y2_05,Y2_06 ;
+    var Y3_01,Y3_02,Y3_03,Y3_04,Y3_05,Y3_06 ;
+    var Y4_01,Y4_02,Y4_03,Y4_04,Y4_05,Y4_06 ;
+    
+// DAU   
+     DRUCnt = theRequest['DRUCnt'];
+alert(" within  menu.html:initMenu() ... DRUCnt: "+DRUCnt) ;
+    DevName = theRequest['DevName'];
+alert(" within  menu.html:initMenu() ... DAU Name: "+DevName) ;
+    DevName_01 = theRequest['DevName_01'];
+alert(" within  menu.html:initMenu() ... DRU Name 1 : "+DevName_01) ;
+    DevName_02 = theRequest['DevName_02'];
+alert(" within  menu.html:initMenu() ... DRU Name 2 : "+DevName_02) ;
+    DevName_03 = theRequest['DevName_03'];
+alert(" within  menu.html:initMenu() ... DRU Name 3 : "+DevName_03) ;
+    DevName_04 = theRequest['DevName_04'];
+alert(" within  menu.html:initMenu() ... DRU Name 4 : "+DevName_04) ;
+    DevName_05 = theRequest['DevName_05'];
+alert(" within  menu.html:initMenu() ... DRU Name 5 : "+DevName_05) ;
+    DevName_06 = theRequest['DevName_06'];
+alert(" within  menu.html:initMenu() ... DRU Name 6 : "+DevName_06) ;
+
+/*
+    DAUdevID = theRequest['did'];
+alert(" within  menu.html:initMenu() ... dev ID: "+DAUdevID) ;
+
+    DAUdevID = theRequest['sid'];
+alert(" within  menu.html:initMenu() ... Station ID: "+DAUdevID) ;
+
+    BandCnt  = theRequest['BandCnt']; 
+alert(" within  menu.html:initMenu() ... BandCnt: "+BandCnt) ;
+    IOdoor   = theRequest['IOdoor']; 
+alert(" within  menu.html:initMenu() ... IOdoor: "+IOdoor) ;
+
+    RfBdTyp1 = theRequest['RfBdTyp1']; 
+alert(" within  menu.html:initMenu() ... RfBdTyp1: "+RfBdTyp1) ;
+
+    BTSiTyp1 = theRequest['BTSiTyp1'];
+alert(" within  menu.html:initMenu() ... BTSiTyp1: "+BTSiTyp1) ;
+
+    RfBdTyp2 = theRequest['RfBdTyp2']; 
+alert(" within  menu.html:initMenu() ... RfBdTyp2: "+RfBdTyp2) ;
+    BTSiTyp2 = theRequest['BTSiTyp2'];
+alert(" within  menu.html:initMenu() ... BTSiTyp2: "+BTSiTyp2) ;
+
+    RfBdTyp3 = theRequest['RfBdTyp3']; 
+alert(" within  menu.html:initMenu() ... RfBdTyp3: "+RfBdTyp3) ;
+    BTSiTyp3 = theRequest['BTSiTyp3'];
+alert(" within  menu.html:initMenu() ... BTSiTyp3: "+BTSiTyp3) ;
+
+    RfBdTyp4 = theRequest['RfBdTyp4']; 
+alert(" within  menu.html:initMenu() ... RfBdTyp4: "+RfBdTyp4) ;
+    BTSiTyp4 = theRequest['BTSiTyp4'];
+alert(" within  menu.html:initMenu() ... BTSiTyp4: "+BTSiTyp4) ;
+
+*/
+
+// DRU
+    DevName_01 = theRequest['DevName_01'];
+alert(" within  menu.html:initMenu() ... DRU Name 1 : "+DevName_01) ;
+    DevName_02 = theRequest['DevName_02'];
+alert(" within  menu.html:initMenu() ... DRU Name 2 : "+DevName_02) ;
+    DevName_03 = theRequest['DevName_03'];
+alert(" within  menu.html:initMenu() ... DRU Name 3 : "+DevName_03) ;
+    DevName_04 = theRequest['DevName_04'];
+alert(" within  menu.html:initMenu() ... DRU Name 4 : "+DevName_04) ;
+    DevName_05 = theRequest['DevName_05'];
+alert(" within  menu.html:initMenu() ... DRU Name 5 : "+DevName_05) ;
+    DevName_06 = theRequest['DevName_06'];
+alert(" within  menu.html:initMenu() ... DRU Name 6 : "+DevName_06) ;
+
+// Indoor or Outdoor DRU
+    IOdoor_01 = theRequest['IO_01'];
+alert(" within  menu.html:initMenu() ... IOdoor_01: "+IOdoor_01) ;
+    IOdoor_02 = theRequest['IO_02'];
+alert(" within  menu.html:initMenu() ... IOdoor_02: "+IOdoor_02) ;
+    IOdoor_03 = theRequest['IO_03'];
+alert(" within  menu.html:initMenu() ... IOdoor_03: "+IOdoor_03) ;
+    IOdoor_04 = theRequest['IO_04'];
+alert(" within  menu.html:initMenu() ... IOdoor_04: "+IOdoor_04) ;
+    IOdoor_05 = theRequest['IO_05'];
+alert(" within  menu.html:initMenu() ... IOdoor_05: "+IOdoor_05) ;
+    IOdoor_06 = theRequest['IO_06'];
+alert(" within  menu.html:initMenu() ... IOdoor_06: "+IOdoor_06) ;
+
+//RF band Type 1
+    R1_01 = theRequest['R1_01'] ;
+alert(" within  menu.html:initMenu() ... R1_01: "+R1_01) ;
+    R1_02 = theRequest['R1_02'] ;
+alert(" within  menu.html:initMenu() ... R1_02: "+R1_02) ;
+    R1_03 = theRequest['R1_03'] ;
+alert(" within  menu.html:initMenu() ... R1_03: "+R1_03) ;
+    R1_04 = theRequest['R1_04'] ;
+alert(" within  menu.html:initMenu() ... R1_04: "+R1_04) ;
+    R1_05 = theRequest['R1_05'] ;
+alert(" within  menu.html:initMenu() ... R1_05: "+R1_05) ;
+    R1_06 = theRequest['R1_06'] ;
+alert(" within  menu.html:initMenu() ... R1_06: "+R1_06) ;
+
+/*
+//RF band Type 2
+    R2_01 = theRequest['R2_01'] ;
+    R2_02 = theRequest['R2_02'] ;
+    R2_03 = theRequest['R2_03'] ;
+    R2_04 = theRequest['R2_04'] ;
+    R2_05 = theRequest['R2_05'] ;
+    R2_06 = theRequest['R2_06'] ;
+//RF band Type 3
+    R3_01 = theRequest['R3_01'] ;
+    R3_02 = theRequest['R3_02'] ;
+    R3_03 = theRequest['R3_03'] ;
+    R3_04 = theRequest['R3_04'] ;
+    R3_05 = theRequest['R3_05'] ;
+    R3_06 = theRequest['R3_06'] ;
+//RF band Type 4
+    R4_01 = theRequest['R4_01'] ;
+    R4_02 = theRequest['R4_02'] ;
+    R4_03 = theRequest['R4_03'] ;
+    R4_04 = theRequest['R4_04'] ;
+    R4_05 = theRequest['R4_05'] ;
+    R4_06 = theRequest['R4_06'] ;
+
+*/
+
+// Payr 1
+    Y1_01 = theRequest['Y1_01'] ;
+alert(" within  menu.html:initMenu() ... Y1_01: "+Y1_01) ;
+    Y1_02 = theRequest['Y1_02'] ;
+alert(" within  menu.html:initMenu() ... Y1_02: "+Y1_02) ;
+    Y1_03 = theRequest['Y1_03'] ;
+alert(" within  menu.html:initMenu() ... Y1_03: "+Y1_03) ;
+    Y1_04 = theRequest['Y1_04'] ;
+alert(" within  menu.html:initMenu() ... Y1_04: "+Y1_04) ;
+    Y1_05 = theRequest['Y1_05'] ;
+alert(" within  menu.html:initMenu() ... Y1_05: "+Y1_05) ;
+    Y1_06 = theRequest['Y1_06'] ;
+alert(" within  menu.html:initMenu() ... Y1_06: "+Y1_06) ;
+
+// Payr 2
+    Y2_01 = theRequest['Y2_01'] ;
+    Y2_02 = theRequest['Y2_02'] ;
+    Y2_03 = theRequest['Y2_03'] ;
+    Y2_04 = theRequest['Y2_04'] ;
+    Y2_05 = theRequest['Y2_05'] ;
+    Y2_06 = theRequest['Y2_06'] ;
+
+// Payr 3
+    Y3_01 = theRequest['Y3_01'] ;
+    Y3_02 = theRequest['Y3_02'] ;
+    Y3_03 = theRequest['Y3_03'] ;
+    Y3_04 = theRequest['Y3_04'] ;
+    Y3_05 = theRequest['Y3_05'] ;
+    Y3_06 = theRequest['Y3_06'] ;
+
+// Payr 4
+    Y4_01 = theRequest['Y4_01'] ;
+    Y4_02 = theRequest['Y4_02'] ;
+    Y4_03 = theRequest['Y4_03'] ;
+    Y4_04 = theRequest['Y4_04'] ;
+    Y4_05 = theRequest['Y4_05'] ;
+    Y4_06 = theRequest['Y4_06'] ;
+
+
+    }
+
+</script>
+</head>
+    
+<!-- body onload="initMenu();" -->
+<body>
+    
+<div class="container"> 
+    <table border="0" cellspacing="1" cellpadding="1"  > 
+        <tr><td><div id = "Debug">&nbsp;</div></td></tr>
+    </table>
+</div>    
+        <SCRIPT LANGUAGE="javascript">
+
+            // Init. var.
+            var DRUCnt = 0;
+            var DName = "DevName_0" ; 
+            var DevName= DevName_01= DevName_02= DevName_03= DevName_04= DevName_05= DevName_06= DevContent= TstName = "";
+
+            // dru param
+            var IOdoor_01 = IOdoor_02 = IOdoor_03 = IOdoor_04 = IOdoor_05 = IOdoor_06 = "";
+            var R1_01 = R1_02 = R1_03 = R1_04 = R1_05 = R1_06 = "";
+            var R2_01 = R2_02 = R2_03 = R2_04 = R2_05 = R2_06 = "";
+            var R3_01 = R3_02 = R3_03 = R3_04 = R3_05 = R3_06 = "";
+            var R4_01 = R4_02 = R4_03 = R4_04 = R4_05 = R4_06 = ""; 
+            
+            // Payr
+            var Y1_01 = Y1_02 = Y1_03 = Y1_04 = Y1_05 = Y1_06 = "";
+            var Y2_01 = Y2_02 = Y2_03 = Y2_04 = Y2_05 = Y2_06 = "";
+            var Y3_01 = Y3_02 = Y3_03 = Y3_04 = Y3_05 = Y3_06 = "";
+            var Y4_01 = Y4_02 = Y4_03 = Y4_04 = Y4_05 = Y4_06 = "";
+            
+            var IO_01 = IO_02 = IO_03 = IO_04 = IO_05 = IO_06 = "";
+            var IP_01 = IP_02 = IP_03 = IP_04 = IP_05 = IP_06 = "";
+            
+            var tmpStg, StgContent = "";
+
+            var url = location.href;
+            var theRequest = new Object();
+ 
+            if (url.indexOf("?") != -1) {
+                var str = url.substr(url.indexOf("?")+1);
+                strs = str.split("&");
+                for (var i = 0; i < strs.length; i++) {
+                    theRequest[strs[i].split("=")[0]] = unescape(strs[i].split("=")[1]);
+                }
+            }
+// dau quadband
+            DevName = theRequest['DevName'];
+            
+            DRUCnt = theRequest['DRUCnt'];
+            DAUdevID = theRequest['did'];
+            
+            BandCnt  = theRequest['BandCnt']; 
+            IOdoor   = theRequest['IOdoor']; 
+            RfBdTyp1 = theRequest['RfBdTyp1'];  
+            RfBdTyp1 = theRequest['RfBdTyp1']; 
+            BTSiTyp1 = theRequest['BTSiTyp1'];
+            RfBdTyp2 = theRequest['RfBdTyp2']; 
+            BTSiTyp2 = theRequest['BTSiTyp2'];
+            RfBdTyp3 = theRequest['RfBdTyp3']; 
+            BTSiTyp3 = theRequest['BTSiTyp3'];
+            RfBdTyp4 = theRequest['RfBdTyp4']; 
+            BTSiTyp4 = theRequest['BTSiTyp4'];
+
+//--------------------------------            
+// DAU
+//--------------------------------            
+            document.write("<dl>");
+            document.write("<dt><a href='dau.html?");
+// dau device name             
+            document.write("DevName=");
+            document.write(DevName);
+// dau band count            
+            document.write("&BandCnt=");
+            document.write(BandCnt);
+// I/O door            
+            document.write("&IOdoor=");
+            document.write(IOdoor);
+// DAU RF Band Type 1            
+            document.write("&RfBdTyp1=");
+            document.write(RfBdTyp1);
+// DAU BTS Type 1            
+            document.write("&BTSiTyp1=");
+            document.write(BTSiTyp1);
+// DAU RF Band Type 2            
+            document.write("&RfBdTyp2=");
+            document.write(RfBdTyp2);
+// DAU BTS Type 2            
+            document.write("&BTSiTyp2=");
+            document.write(BTSiTyp2);
+// DAU RF Band Type 3            
+            document.write("&RfBdTyp3=");
+            document.write(RfBdTyp3);
+// DAU BTS Type 3            
+            document.write("&BTSiTyp3=");
+            document.write(BTSiTyp3);
+// DAU RF Band Type 4            
+            document.write("&RfBdTyp4=");
+            document.write(RfBdTyp4);
+// DAU BTS Type 4            
+            document.write("&BTSiTyp4=");
+            document.write(BTSiTyp4);
+// Device ID              
+            document.write("&did=");
+            document.write(DAUdevID);
+// Station Id not used             
+            document.write("&deviceMode=DAU_quadband' target='showwindow'>");
+            document.write(DevName);
+            document.write("</a></dt->");
+            
+ // DRU dualband  
+            DRUCnt = parseInt(theRequest['DRUCnt']) - 1 ;
+            
+            
+//--------------------------------            
+// DRU
+//--------------------------------            
+// Debug
+//document.write("DRUCnt - "+DRUCnt.toString()+"<br>");
+
+            for(var i=1; i<=DRUCnt; i++){
+//----------------
+// DRU device name
+//----------------
+                TstName = DName + i.toString();
+// debug
+//document.write("TstName - "+TstName+"<br>");
+//alert(" -- within menu.html -- TstName:"+TstName);
+                switch(i) {
+                    case 1: DevName_01 = theRequest['DevName_01']; break;
+                    case 2: DevName_02 = theRequest['DevName_02']; break;
+                    case 3: DevName_03 = theRequest['DevName_03']; break;
+                    case 4: DevName_04 = theRequest['DevName_04']; break;
+                    case 5: DevName_05 = theRequest['DevName_05']; break;
+                    case 6: DevName_06 = theRequest['DevName_06']; break;
+                }
+                DevContent = eval(TstName) ;
+                
+                document.write("<dd><a href='dru.html?deviceID="+DevContent);
+                document.write("&DevName="+DevContent);
+//----------------------------------------------------------------------------???
+//----------------
+// DRU RF Band Type 1
+//----------------
+                tmpStg = "R1_0"+ i.toString();
+               switch(i) {
+                    case 1: R1_01 = theRequest['R1_01'] ;break;
+                    case 2: R1_02 = theRequest['R1_02'] ;break;
+                    case 3: R1_03 = theRequest['R1_03'] ;break;
+                    case 4: R1_04 = theRequest['R1_04'] ;break;
+                    case 5: R1_05 = theRequest['R1_05'] ;break;
+                    case 6: R1_06 = theRequest['R1_06'] ;break;
+                }
+                StgContent = eval(tmpStg) ;
+// Debug
+//alert(" -- within menu.html -- tmpStg:"+tmpStg+" -- StgContent:"+StgContent);
+                document.write("&R1="+StgContent);
+//----------------
+// DRU RF Band Type 2
+//----------------
+                tmpStg = "R2_0"+ i.toString();
+               switch(i) {
+                    case 1: R2_01 = theRequest['R2_01'] ;break;
+                    case 2: R2_02 = theRequest['R2_02'] ;break;
+                    case 3: R2_03 = theRequest['R2_03'] ;break;
+                    case 4: R2_04 = theRequest['R2_04'] ;break;
+                    case 5: R2_05 = theRequest['R2_05'] ;break;
+                    case 6: R2_06 = theRequest['R2_06'] ;break;
+                }
+                StgContent = eval(tmpStg) ;
+                document.write("&R2="+StgContent);
+//----------------
+// DRU RF Band Type 3 - currently not used
+//----------------
+                tmpStg = "R3_0"+ i.toString();
+               switch(i) {
+                    case 1: R3_01 = theRequest['R3_01'] ;break;
+                    case 2: R3_02 = theRequest['R3_02'] ;break;
+                    case 3: R3_03 = theRequest['R3_03'] ;break;
+                    case 4: R3_04 = theRequest['R3_04'] ;break;
+                    case 5: R3_05 = theRequest['R3_05'] ;break;
+                    case 6: R3_06 = theRequest['R3_06'] ;break;
+                }
+                StgContent = eval(tmpStg) ;
+                document.write("&R3="+StgContent);
+//----------------
+// DRU RF Band Type 4 - currently not used
+//----------------
+                tmpStg = "R4_0"+ i.toString();
+               switch(i) {
+                    case 1: R4_01 = theRequest['R4_01'] ;break;
+                    case 2: R4_02 = theRequest['R4_02'] ;break;
+                    case 3: R4_03 = theRequest['R4_03'] ;break;
+                    case 4: R4_04 = theRequest['R4_04'] ;break;
+                    case 5: R4_05 = theRequest['R4_05'] ;break;
+                    case 6: R4_06 = theRequest['R4_06'] ;break;
+                }
+                StgContent = eval(tmpStg) ;
+                document.write("&R4="+StgContent);
+//----------------------------------------------------------------------------???
+
+//----------------
+// DRU Payr 1
+//----------------
+                tmpStg = "Y1_0"+ i.toString();
+               switch(i) {
+                    case 1: Y1_01 = theRequest['Y1_01'] ;break;
+                    case 2: Y1_02 = theRequest['Y1_02'] ;break;
+                    case 3: Y1_03 = theRequest['Y1_03'] ;break;
+                    case 4: Y1_04 = theRequest['Y1_04'] ;break;
+                    case 5: Y1_05 = theRequest['Y1_05'] ;break;
+                    case 6: Y1_06 = theRequest['Y1_06'] ;break;
+                }
+                StgContent = eval(tmpStg) ;
+// Debug
+//alert(" -- within menu.html -- tmpStg:"+tmpStg+" -- StgContent:"+StgContent);
+                document.write("&Y1="+StgContent);
+//----------------
+// DRU Payr 2
+//----------------
+                tmpStg = "Y2_0"+ i.toString();
+               switch(i) {
+                    case 1: Y2_01 = theRequest['Y2_01'] ;break;
+                    case 2: Y2_02 = theRequest['Y2_02'] ;break;
+                    case 3: Y2_03 = theRequest['Y2_03'] ;break;
+                    case 4: Y2_04 = theRequest['Y2_04'] ;break;
+                    case 5: Y2_05 = theRequest['Y2_05'] ;break;
+                    case 6: Y2_06 = theRequest['Y2_06'] ;break;
+                }
+                StgContent = eval(tmpStg) ;
+                document.write("&Y2="+StgContent);
+//----------------
+// DRU Payr 3
+//----------------
+                tmpStg = "Y3_0"+ i.toString();
+               switch(i) {
+                    case 1: Y3_01 = theRequest['Y3_01'] ;break;
+                    case 2: Y3_02 = theRequest['Y3_02'] ;break;
+                    case 3: Y3_03 = theRequest['Y3_03'] ;break;
+                    case 4: Y3_04 = theRequest['Y3_04'] ;break;
+                    case 5: Y3_05 = theRequest['Y3_05'] ;break;
+                    case 6: Y3_06 = theRequest['Y3_06'] ;break;
+                }
+                StgContent = eval(tmpStg) ;
+                document.write("&Y3="+StgContent);
+//----------------
+// DRU Payr 4
+//----------------
+                tmpStg = "Y4_0"+ i.toString();
+               switch(i) {
+                    case 1: Y4_01 = theRequest['Y4_01'] ;break;
+                    case 2: Y4_02 = theRequest['Y4_02'] ;break;
+                    case 3: Y4_03 = theRequest['Y4_03'] ;break;
+                    case 4: Y4_04 = theRequest['Y4_04'] ;break;
+                    case 5: Y4_05 = theRequest['Y4_05'] ;break;
+                    case 6: Y4_06 = theRequest['Y4_06'] ;break;
+                }
+                StgContent = eval(tmpStg) ;
+                document.write("&Y4="+StgContent);
+
+//----------------------------------------------------------------------------???
+//----------------
+// DRU I/O type
+//----------------
+                tmpStg = "IO_0"+ i.toString();
+               switch(i) {
+                    case 1: IO_01 = theRequest['IO_01'] ;break;
+                    case 2: IO_02 = theRequest['IO_02'] ;break;
+                    case 3: IO_03 = theRequest['IO_03'] ;break;
+                    case 4: IO_04 = theRequest['IO_04'] ;break;
+                    case 5: IO_05 = theRequest['IO_05'] ;break;
+                    case 6: IO_06 = theRequest['IO_06'] ;break;
+                }
+                StgContent = eval(tmpStg) ;
+                document.write("&IO="+StgContent);
+//----------------
+// DRU Network IP Address
+//----------------
+                tmpStg = "IP_0"+ i.toString();
+                
+               switch(i) {
+                    case 1: IP_01 = theRequest['IP_01'] ;break;
+                    case 2: IP_02 = theRequest['IP_02'] ;break;
+                    case 3: IP_03 = theRequest['IP_03'] ;break;
+                    case 4: IP_04 = theRequest['IP_04'] ;break;
+                    case 5: IP_05 = theRequest['IP_05'] ;break;
+                    case 6: IP_06 = theRequest['IP_06'] ;break;
+                }
+                StgContent = eval(tmpStg) ;
+                document.write("&IP="+StgContent);
+// Debug
+//alert(" -- within menu.html -- tmpStg:"+tmpStg+" -- StgContent:"+StgContent);
+//alert(" -- within menu.html -- tmpStg:"+tmpStg);
+
+//----------------
+// Include the DAU band RF Frequency for BTS Sector Selection regarding DRU Cfg
+//----------------
+// DAU RF Band Type 1            
+                document.write("&RfBdTyp1=");
+                document.write(RfBdTyp1);
+// DAU RF Band Type 2            
+                document.write("&RfBdTyp2=");
+                document.write(RfBdTyp2);
+// DAU RF Band Type 3            
+                document.write("&RfBdTyp3=");
+                document.write(RfBdTyp3);
+// DAU RF Band Type 4            
+                document.write("&RfBdTyp4=");
+                document.write(RfBdTyp4);
+//
+//----------------
+// Include DAU Device ID and dau device mode for DRU Configuration              
+//----------------
+            document.write("&daudid=");
+            document.write(DAUdevID);
+// Station Id not used             
+            document.write("&daudMode=DAU_quadband");
+//
+//----------------
+// DRU device mode
+//----------------
+                document.write("&deviceMode=DRU_dualband' target='showwindow'>");
+                document.write(DevContent);
+                document.write("</a></dd>");
+            }
+            document.write("</dl>");
+        </SCRIPT> 
+</body>
+</html>

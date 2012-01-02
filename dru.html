@@ -1,0 +1,386 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Sirius Innovations Inc @ 2011</title>
+<script type = "text/javascript" src = "js/json2.js"></script>
+<script type = "text/javascript" src = "js/common.js"></script>
+<script type = "text/javascript" src = "js/rwDRU.js"></script>
+<script type = "text/javascript" src = "js/alarm.js"></script>
+<script language="javascript" type="text/javascript">
+</script>
+<link rel="stylesheet" type="text/css" href="style/device.css" />
+</head>
+<!--
+//======================== Update Log ==========================================
+// Change DL and UL Attentuation with Object ID 0x441 , with Device ID coded x05         
+// Change label 'PA on/off' to 'DL on/off'
+// remove DPD On-off, CFR-WCDMA                               + Oct.19.2011
+// restore label 'PA on/off' regarding Ying's copy merge      + Nov.04.2011
+// update Dev Name and Band Type to pay attention to param    + Nov.15.2011
+//======================== Update Log ==========================================
+-->
+<body onload="readAllParas()">
+<!--<body>-->
+<!--  + Oct.19.2011 -->
+<table border="0" cellspacing="0" cellpadding="0"  > 
+<tr><td><div id="DeviceName" style="font-weight:bold; font-style:italic; font-size:150%" >DRU</div></td></tr>
+<tr><td><div id= "msgDiv" >Message</div></td></tr>
+<tr><td><div id= "ErrDiv">&nbsp;</div></td></tr>
+</table>
+
+<!--------------------------------------------------------------------- + Band 850 +---------------------------------------------------------------------->
+<div id = "1">
+    <table style="width:100%;">
+        <tr>
+<!-- td style="width: 33%;">Band 850:</td -->
+            <td style="width: 33%;"><div id="DRURfBdTyp1" style="font-weight:bold; font-size:100%">Band one</div></td>
+
+            <td style="width: 33%;"><input id="Button1" type="button" value="Set Parameters" onclick = "writeData('php/rwParas.php', 1)"/></td>
+            <td style="width: 33%;"></td>
+        </tr>
+    </table>
+    <table class="bandTable" border="1">
+        <tr>
+            <td style="width: 33%;">
+                <table style="width: 100%;">
+                    <tr>
+                        <td>
+                            DL Attenuation:
+                        </td>
+<!-- + Oct.19.2011 -->                        
+<!-- td><input id="0x440_1" type="text" class="normalInupt" onblur="verifyData(id)"/>dB</td   -->
+                        <td><input id="0x441_1" type="text" class="normalInupt" onblur="verifyData(id)"/>dB</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            DL System Gain:
+                        </td>
+                        <td>
+                            <input id="DLGain_1" type="text" readonly="readonly" class="readonlyInput"/>dB</td>
+                    </tr>
+                    <tr>
+                        <td>
+<!--  OID is 0x440, remap as 0x441_1 to 0x441_8   -->                            
+                            UL Attenuation:
+                        </td>
+<!-- + Oct.19.2011 -->                        
+<!-- td><input id="0x441_2" type="text" class="normalInupt" onblur="verifyData(id)"/>dB</td -->
+                        <td><input id="0x441_2" type="text" class="normalInupt" onblur="verifyData(id)"/>dB</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            UL System Gain:
+                        </td>
+                        <td>
+                            <input id="ULGain_1" type="text" readonly="readonly" class="readonlyInput"/>dB</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            &nbsp;
+                        </td>
+                        <td>
+                            &nbsp;
+                        </td>
+                    </tr>
+                </table>
+            </td>
+            <td style="width: 33%;">
+                <table style="width: 100%;">
+                    
+                    <tr>
+                        <td>DL Output Power:</td>
+                        <td><input id="0x503_1" type="text" readonly="readonly" class="readonlyInput"/>dBm</td>
+                    </tr>
+                    <tr>
+                        <td>UL Input Power:</td>
+                        <td><input id="0x5a7_1" type="text" readonly="readonly" class="readonlyInput"/>dBm</td>
+                    </tr>
+<!--  note: PA Temperature,DL VSWR, DL VSWR Threshold only applies to Outdoor DRU only -->                    
+                    <tr>
+                        <td>PA Temperature:</td>
+                        <td><input id="0x501_1" type="text" readonly="readonly" class="readonlyInput"/>°C</td>
+                    </tr>
+                    <tr>
+                        <td>DL VSWR:</td>
+                        <td><input id="0x506_1" type="text" readonly="readonly" class="readonlyInput"/></td>
+                    </tr>
+                    <tr>
+                        <td>DL VSWR Threshold:</td>
+                        <td><input id="0x450_1" type="text" class="normalInupt" onblur="verifyData(id)"/></td>
+                    </tr>
+                </table>
+            </td>
+            <td style="width: 34%;">
+                <table style="width: 100%;">
+                    <tr>
+                        <td>
+                            DL On/Off:
+                        </td>
+                        <td>
+                            <input id="0x402_1_on" name="0x402_1" type="radio" value="V1" />On
+                            <input id="0x402_1_off" name="0x402_1" type="radio" value="V1" />Off
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            UL On/Off:
+                        </td>
+                        <td>
+                            <input id="0x4cd_1_on" name="0x4cd_1" type="radio" value="V1" />On
+                            <input id="0x4cd_1_off" name="0x4cd_1" type="radio" value="V1" />Off
+                        </td>
+                    </tr>
+                    <tr><td>&nbsp;</td><td>&nbsp;</td></tr>
+                    <tr><td>&nbsp;</td><td>&nbsp;</td></tr>
+                    <tr>
+                        <td>
+                            Alarm:</td>
+                        <td>
+                            <a href="alarm.html" id="0x3ab_1">Status</a></td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+    
+</div>  
+<p />
+<!--------------------------------------------------------------------- + Band 1900 +---------------------------------------------------------------------->
+<div id = "2">
+    
+    <table style="width:100%;">
+        <tr>
+<!-- td style="width: 33%;">Band 1900:</td -->
+            <td style="width: 33%;"><div id="DRURfBdTyp2" style="font-weight:bold; font-size:100%">Band two</div></td>
+
+            <td style="width: 33%;"><input id="Button5" type="button" value="Set Parameters" onclick = "writeData('php/rwParas.php', 2)"/></td>
+            <td style="width: 33%;"></td>
+        </tr>
+    </table>
+    
+    <table class="bandTable" border="1">
+        <tr>
+            <td style="width: 33%;">
+                <table style="width: 100%;">
+                    <tr>
+                        <td>
+                            DL Attenuation:
+                        </td>
+<!-- + Oct.19.2011 -->                        
+<!-- td><input id="0x440_3" type="text" class="normalInupt" onblur="verifyData(id)"/>dB</td -->
+                        <td><input id="0x441_3" type="text" class="normalInupt" onblur="verifyData(id)"/>dB</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            DL System Gain:
+                        </td>
+                        <td>
+                            <input id="DLGain_2" type="text" readonly="readonly" class="readonlyInput"/>dB</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            UL Attenuation:
+                        </td>
+<!-- + Oct.19.2011 -->                        
+<!-- td><input id="0x440_4" type="text" class="normalInupt" onblur="verifyData(id)"/>dB</td -->
+                        <td><input id="0x441_4" type="text" class="normalInupt" onblur="verifyData(id)"/>dB</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            UL System Gain:
+                        </td>
+                        <td>
+                            <input id="ULGain_2" type="text" readonly="readonly" class="readonlyInput"/>dB</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            &nbsp;
+                        </td>
+                        <td>
+                            &nbsp;
+                        </td>
+                    </tr>
+                </table>
+            </td>
+            <td style="width: 33%;">
+                <table style="width: 100%;">
+                    <tr>
+                        <td>DL Output Power:</td>
+                        <td><input id="0x503_2" type="text" readonly="readonly" class="readonlyInput"/>dBm</td>
+                    </tr>
+                    <tr>
+                        <td>UL Input Power:</td>
+                        <td><input id="0x5a7_2" type="text" readonly="readonly" class="readonlyInput"/>dBm</td>
+                    </tr>
+<!--  note: PA Temperature,DL VSWR, DL VSWR Threshold only applies to Outdoor DRU only -->                    
+                    <tr>
+                        <td>PA Temperature:</td>
+                        <td><input id="0x501_2" type="text" readonly="readonly" class="readonlyInput"/>°C</td>
+                    </tr>
+                    <tr>
+                        <td>DL VSWR:</td>
+                        <td><input id="0x506_2" type="text" readonly="readonly" class="readonlyInput"/></td>
+                    </tr>
+                    <tr>
+                        <td>DL VSWR Threshold:</td>
+                        <td><input id="0x450_2" type="text" class="normalInupt" onblur="verifyData(id)"/></td>
+                    </tr>
+                </table>
+            </td>
+            <td style="width: 34%;">
+                <table style="width: 100%;">
+                    <tr>
+                        <td>
+                            DL On/Off:
+                        </td>
+                        <td>
+                            <input id="0x402_2_on" name="0x402_2" type="radio" value="V1" />On
+                            <input id="0x402_2_off" name="0x402_2" type="radio" value="V1" />Off
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            UL On/Off:
+                        </td>
+                        <td>
+                            <input id="0x4cd_2_on" name="0x4cd_2" type="radio" value="V1" />On
+                            <input id="0x4cd_2_off" name="0x4cd_2" type="radio" value="V1" />Off
+                        </td>
+                    </tr>
+                    <tr><td>&nbsp;</td><td>&nbsp;</td></tr>
+                    <tr><td>&nbsp;</td><td>&nbsp;</td></tr>
+                    <tr>
+                        <td>
+                            Alarm:</td>
+                        <td>
+                            <a href="alarm.html" id="0x3ab_2">Status</a></td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+</div>  
+<p />
+<!--------------------------------------------------------------------- +   System  +---------------------------------------------------------------------->
+<div id = "system">
+    <table style="width:100%;">
+        <tr>
+            <td style="width: 33%;">System:</td>
+            <td style="width: 33%;"><input id="Button3" type="button" value="Set Parameters" onclick = "writeData('php/rwParas.php', 0)"/></td>
+            <td style="width: 33%;" style= "text-align:right"><input id="Button6" type="button" value="Configuration" onclick="druConfig();"/></td>
+        </tr>
+    </table>
+    <table class="bandTable" border="1">
+        <tr style="width: 33%;">
+            <td>
+                <table style="width: 100%;">
+                    <tr>
+                        <td>
+                            Optical Delay:
+                        </td>
+                        <td><input id="0x4a0_0" type="text"  readonly="readonly" class="readonlyInput"/>µs</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Delay Compensation:
+                        </td>
+                        <td>
+                <input id="0x4a1_0" type="text" class="normalInupt" onblur="verifyData(id)"/>µs</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            &nbsp;
+                        </td>
+                        <td>
+                            &nbsp;
+                        </td>
+                    </tr>
+                </table>
+            </td>
+            <td style="width: 33%;">
+                <table style="width: 100%;">
+                    <tr>
+                        <td>
+                            Serial Number:
+                        </td>
+                        <td><input id="0x5_0" type="text"  readonly="readonly" class="readonlyInput"/></td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Software Version:
+                        </td>
+                        <td><input id="0xa_0" type="text" class="readonlyInput" readonly="readonly"/></td>
+                    </tr>
+                    <tr>
+                        <td>
+                            &nbsp;
+                        </td>
+                        <td>
+                            &nbsp;
+                        </td>
+                    </tr>
+                </table>
+            </td>
+            <td style="width: 34%;">
+                <table style="width: 100%;">
+                    <tr>
+                        <td>M&amp;C Status:</td>
+                        <td><div id="MCStatus">Ok</div></td>
+                    </tr>
+                    <tr>
+                        <td>
+                            &nbsp;
+                        </td>
+                        <td>
+                            &nbsp;
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Alarm:</td>
+                        <td><a href="alarm.html" id="0x3ab_0">Status</a></td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+    
+</div> 
+<!----------------------------------------------  Block of Hidden fields holding param for DRU Cfg + 10.Nov.2011 ------------------------------------------>
+<div class="container">    
+            <FORM NAME="drucfg">
+<!-- DRU device parameters -->                
+                <input id="RfBdTyp1"   NAME="RfBdTyp1"   type="hidden"/>
+                <input id="RfBdTyp2"   NAME="RfBdTyp2"   type="hidden"/>
+                <input id="RfBdTyp3"   NAME="RfBdTyp3"   type="hidden"/>
+                <input id="RfBdTyp4"   NAME="RfBdTyp4"   type="hidden"/>
+                <input id="Payr1"      NAME="Payr1"      type="hidden"/>
+                <input id="Payr2"      NAME="Payr2"      type="hidden"/>
+                <input id="Payr3"      NAME="Payr3"      type="hidden"/>
+                <input id="Payr4"      NAME="Payr4"      type="hidden"/>
+<!-- DRU Device Id -->
+                <input id="DRUdid"     NAME="DRUdid"     type="hidden"/>
+<!-- DRU Device Mode-->                
+                <input id="deviceMode" NAME="deviceMode" type="hidden"/>
+<!-- DRU Indoor or Outdoor -->
+               <input id="IOdoor"      NAME="IOdoor"     type="hidden"/>
+<!-- DRU Network IP Address -->                
+                <input id="NetwkIP"    NAME="NetwkIP"    type="hidden"/>
+<!-- DAU device Cfg BTS Sector Selection -->                
+                <input id="DAUBT1"     NAME="DAUBT1"     type="hidden"/>
+                <input id="DAUBT2"     NAME="DAUBT2"     type="hidden"/>
+                <input id="DAUBT3"     NAME="DAUBT3"     type="hidden"/>
+                <input id="DAUBT4"     NAME="DAUBT4"     type="hidden"/>
+<!-- DAU device Id  -->                
+                <input id="daudid"     NAME="daudid"     type="hidden"/>
+<!-- DAU device Mode -->                
+                <input id="daudMode"   NAME="daudMode"   type="hidden"/>
+
+            </FORM>
+</div>
+
+</body>
+</html>
+
+

@@ -1,0 +1,84 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<!--   caller:   rwDAU.js - freqSetting() -->
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Sirius Innovations Inc @ 2011</title>
+<script type = "text/javascript" src = "js/json2.js"></script>
+<script type = "text/javascript" src = "js/subBand.js"></script>
+
+<!-- script language="javascript" type="text/javascript"></script  -->
+
+<link rel="stylesheet" type="text/css" href="style/device.css" />
+</head>
+
+<!--   + Oct.14.2011 - body    -->
+<body onload="GetRequest()">
+
+<!--  + Oct.10.2011 -->
+<table border="0" cellspacing="0" cellpadding="0"  > 
+<tr><td><h1 id= "DeviceName">DAU Sub-Band Selection</h1></td></tr>
+<tr><td><div id= "msgDiv" >&nbsp;</div></td></tr>
+<tr><td><div id= "ErrDiv"> &nbsp; </div></td></tr>
+</table>
+
+<div id = "Div1" >
+    <table class="bandTable" border="1">
+        <tr><td>DAU Name/Lable: <input id="DAU_Name" type="text" readonly="readonly" class="readonlyInput"/></td></tr>
+    </table>
+</div><br/>
+
+<table class="subBandTable" border="1">
+    <tr>
+        <td>&nbsp;</td>
+        <td>Frequency</td>
+        <td>Sub-Band Selection</td>
+    </tr>
+    <tr>
+        <td>Band <div id="bandno" style="font-weight:bold; font-size:80%">&nbsp;</div></td>
+        <td><input id="Text1" type="text" readonly="readonly" class="readonlyInput" value="1900"/></td>
+        <td>
+            <table class="subBandTable" border="1" style= "width: 500px">
+                <tr>
+<!-- 12 bands available -->                    
+                    <td><input id="A1" type="checkbox" onclick="dauChkSws();" /><br/>A1</td>
+                    <td><input id="A2" type="checkbox" onclick="dauChkSws();" /><br/>A2</td>
+                    <td><input id="A3" type="checkbox" onclick="dauChkSws();" /><br/>A3</td>
+                    <td><input id="D"  type="checkbox" onclick="dauChkSws();" /><br/>D</td>
+                    <td><input id="B1" type="checkbox" onclick="dauChkSws();" /><br/>B1</td>
+                    <td><input id="B2" type="checkbox" onclick="dauChkSws();" /><br/>B2</td>
+                    <td><input id="B3" type="checkbox" onclick="dauChkSws();" /><br/>B3</td>
+                    <td><input id="E"  type="checkbox" onclick="dauChkSws();" /><br/>E</td>
+                    <td><input id="F"  type="checkbox" onclick="dauChkSws();" /><br/>F</td>
+                    <td><input id="C3" type="checkbox" onclick="dauChkSws();" /><br/>C3</td>
+                    <td><input id="C4" type="checkbox" onclick="dauChkSws();" /><br/>C4</td>
+                    <td><input id="C5" type="checkbox" onclick="dauChkSws();" /><br/>C5</td>
+                    <td><input id="G"  type="checkbox" onclick="dauChkSws();" /><br/>G</td>
+                </tr>
+                <tr>
+                    <td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td>
+                    <td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+    <tr><td colspan="3">&nbsp;</td></tr>
+<!--    
+    <tr><td colspan="3">&nbsp;</td></tr>
+    <tr><td colspan="3">&nbsp;</td></tr>
+-->
+    <tr>
+        <td><input id="Button1" type="button" value="Set Band(s)"   onclick = "writeData('php/rwParas.php');"/></td>
+<!-- + Oct.26.2011-->
+        <td><input id="Button2" type="button" value="Reset Band(s)" onclick = "resetChkBox();"/></td>
+<!-- -->
+        <td colspan="2"></td>
+    </tr>
+</table>
+
+</body>
+</html>
+
+

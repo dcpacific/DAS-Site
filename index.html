@@ -1,0 +1,804 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Sirius Innovations Inc @ 2011</title>
+
+<!-- + Oct.14.2011 -->
+<script type = "text/javascript" src = "js/common.js"></script>
+<SCRIPT LANGUAGE="javascript">
+
+//------------------------------------------------------------------------------
+// Update Log:
+//    - synchronize with ntfMain.php to archive individual DRU NetwkIP  + Nov.15.2011
+//    - change GUI version to 1.2.0.95                                                              + Nov.23.2011
+//------------------------------------------------------------------------------
+
+//==============================================================================
+// function initMain
+// note: callee sleep() is defined at common.js
+//==============================================================================
+function initMain() {
+
+    var id, nDRUcnt ;
+    // system clock
+    clock()
+
+alert(" -- calling the Boot Ctrl Seq. Please wait ... ");
+//sleep(1);
+
+    // Management Ctrl Boot
+//MgCtlRdData('php/ntfMain.php');
+//--------------------------
+// ntfMain.php starts with 0x1005 and handles return 0x1006 only
+// ntfMain2.php starts with 0x1005 and handles both 0x1006 and 0x1000
+//--------------------------
+//    MgCtlRdData('php/ntfMain.php');
+    MgCtlRdData('php/ntfMain3.php');
+
+    
+    //read DAU Config - if empty, force user to config.
+    //need to poll the DAU and DRU device name if changed on the fly
+}
+
+//==============================================================================
+// function URLConstruct
+// note: callee sleep() is defined at common.js
+//==============================================================================
+function URLConstruct() {
+
+    var target;
+    var showTest;
+    var j = parseInt(document.dau.DRUCnt.value);
+    var k;
+    var cDAUurl, tmpFld ;
+
+//debug
+//alert(" -- within URLConstruct ... ");
+
+//--------------------------
+// main
+//--------------------------
+    url = "dau.html?";
+//DAU Device Id    
+    url = url + "did="+document.dau.DevName.value ;
+//DAU Device Name    
+    url = url + "&DevName=" + document.dau.DevName.value ;
+// Band Count 
+    k = document.dau.BandCnt.value ;
+    url = url + "&BandCnt="+k.toString();
+// Serial No.  - rx via the reg. polling  
+//    url = url + "&serial="+document.dau.serial.value;
+// IOdoor    
+    url = url + "&IOdoor="+document.dau.IOdoor.value;
+// SWver       - - rx via the reg. polling 
+//    url = url + "&SWver="+document.dau.SWver.value;
+// RfBdTyp1   
+    k = document.dau.RfBdTyp1.value;
+    url = url + "&RfBdTyp1="+k.toString();
+// BTSiTyp1  
+    k = document.dau.BTSiTyp1.value;
+    url = url + "&BTSiTyp1="+k.toString();
+// RfBdTyp2   
+    k = document.dau.RfBdTyp2.value;
+    url = url + "&RfBdTyp2="+k.toString();
+// BTSiTyp2 
+    k = document.dau.BTSiTyp2.value;
+    url = url + "&BTSiTyp2="+k.toString();
+// RfBdTyp3   
+    k = document.dau.RfBdTyp3.value;
+    url = url + "&RfBdTyp3="+k.toString();
+// BTSiTyp3
+    k = document.dau.BTSiTyp3.value;
+    url = url + "&BTSiTyp3="+k.toString();
+// RfBdTyp4 
+    k = document.dau.RfBdTyp4.value;
+    url = url + "&RfBdTyp4="+k.toString();
+// BTSiTyp4
+    k = document.dau.BTSiTyp4.value;
+    url = url + "&BTSiTyp4="+k.toString();
+//Station ID 
+    url = url + "&sid=0";
+//Device Mode - set Mode as last param else screw cfg 
+    url = url + "&deviceMode=DAU_";
+    if (document.dau.BandCnt.value == 2) {
+       url = url +"daulband"; 
+    } else {
+       url = url +"quadband"; 
+    }
+
+//DEBUG
+//document.getElementById('Debug').innerHTML = url ;
+
+//alert(" -- MAIN url:"+url);
+
+//-------------------------
+//update main panel
+//-------------------------
+    target = "mainmenu";
+    showTest = document.getElementById(target);
+    if(showTest) {
+
+//debug
+//alert(" -- MAIN  updated! ");
+
+       showTest.src = url; 
+    }
+
+//------------------------------------------------------------------------------
+
+    var url = "menu.html?";
+// DRU count    
+    url = url + "DRUCnt="+document.dau.DRUCnt.value ;
+//-------------------------
+// DAU Device Name
+//-------------------------
+    k = document.dau.DevName.value ;
+    url = url + "&DevName="+ k.toString();
+// DAU Band Count 
+    k = document.dau.BandCnt.value ;
+    url = url + "&BandCnt="+k.toString();
+// IOdoor    
+    url = url + "&IOdoor="+document.dau.IOdoor.value;
+// RfBdTyp1   
+    k = document.dau.RfBdTyp1.value;
+    url = url + "&RfBdTyp1="+k.toString();
+// BTSiTyp1  
+    k = document.dau.BTSiTyp1.value;
+    url = url + "&BTSiTyp1="+k.toString();
+// RfBdTyp2   
+    k = document.dau.RfBdTyp2.value;
+    url = url + "&RfBdTyp2="+k.toString();
+// BTSiTyp2 
+    k = document.dau.BTSiTyp2.value;
+    url = url + "&BTSiTyp2="+k.toString();
+// RfBdTyp3   
+    k = document.dau.RfBdTyp3.value;
+    url = url + "&RfBdTyp3="+k.toString();
+// BTSiTyp3
+    k = document.dau.BTSiTyp3.value;
+    url = url + "&BTSiTyp3="+k.toString();
+// RfBdTyp4 
+    k = document.dau.RfBdTyp4.value;
+    url = url + "&RfBdTyp4="+k.toString();
+// BTSiTyp4
+    k = document.dau.BTSiTyp4.value;
+    url = url + "&BTSiTyp4="+k.toString();
+//Station ID 
+    url = url + "&sid="+ document.dau.DAUsid.value;;
+//DAU Device Id    
+    url = url + "&did="+document.dau.DAUdid.value ;
+//Device Mode - set Mode as last param else screw cfg 
+    url = url + "&deviceMode=DAU_";
+    if (document.dau.BandCnt.value == 2) {
+       url = url +"daulband"; 
+    } else {
+       url = url +"quadband"; 
+    }
+
+//-------------------------
+// DRU device name                     
+//-------------------------
+    for(i=0; i<j; i++) {
+        
+// DRU device name                     
+       target = "DevName_0" + i.toString();
+       showTest = document.getElementById(target);
+       if(showTest) {
+            k = showTest.value ;
+            url = url + "&"+target+"="+k.toString() ;
+       }
+// Band Count - skip as hard coded as Dual Band
+/*
+       target = "BandCnt_0" + i.toString();
+       showTest = document.getElementById(target);
+       if (showTest) {
+            k = showTest.value ;
+            tmpFld = "BC_0" + i.toString();
+            url = url + "&"+tmpFld+"="+k.toString() ;
+       }
+*/
+
+// Indoor or Outdoor DRU
+       target = "IOdoor_0" + i.toString();
+       showTest = document.getElementById(target);
+       if(showTest) {
+            k = showTest.value ;
+//          url = url + "&"+target+"="+k.toString() ;
+            tmpFld = "IO_0" + i.toString();
+            url = url + "&"+tmpFld+"="+k.toString() ;
+       }
+// Network IP
+       target = "NetwkIP_0" + i.toString();
+       showTest = document.getElementById(target);
+       if(showTest) {
+            k = showTest.value ;
+            tmpFld = "IP_0" + i.toString();
+            url = url + "&"+tmpFld+"="+k.toString() ;
+       }
+//-------------------
+//RF band Type 1
+//-------------------
+       target = "RfBdTyp1_0" + i.toString();
+       showTest = document.getElementById(target);
+       if (showTest) {
+            k = showTest.value ;
+            tmpFld = "R1_0" + i.toString();
+            url = url + "&"+tmpFld+"="+k.toString() ;
+       }
+//RF band Type 2
+       target = "RfBdTyp2_0" + i.toString();
+       showTest = document.getElementById(target);
+       if (showTest) {
+            k = showTest.value ;
+            tmpFld = "R2_0" + i.toString();
+            url = url + "&"+tmpFld+"="+k.toString() ;
+       }
+//RF band Type 3
+       target = "RfBdTyp3_0" + i.toString();
+       showTest = document.getElementById(target);
+       if (showTest) {
+            k = showTest.value ;
+            tmpFld = "R3_0" + i.toString();
+            url = url + "&"+tmpFld+"="+k.toString() ;
+       }
+//RF band Type 4
+       target = "RfBdTyp4_0" + i.toString();
+       showTest = document.getElementById(target);
+       if (showTest) {
+            k = showTest.value ;
+            tmpFld = "R4_0" + i.toString();
+            url = url + "&"+tmpFld+"="+k.toString() ;
+       }
+//-------------------
+// Payr 1
+//-------------------
+       target = "Payr1_0" + i.toString();
+       showTest = document.getElementById(target);
+       if (showTest) {
+            k = showTest.value ;
+            tmpFld = "Y1_0" + i.toString();
+            url = url + "&"+tmpFld+"="+k.toString() ;
+       }
+
+// Payr 2
+       target = "Payr2_0" + i.toString();
+       showTest = document.getElementById(target);
+       if (showTest) {
+            k = showTest.value ;
+            tmpFld = "Y2_0" + i.toString();
+            url = url + "&"+tmpFld+"="+k.toString() ;
+       }
+
+// Payr 3
+       target = "Payr3_0" + i.toString();
+       showTest = document.getElementById(target);
+       if (showTest) {
+            k = showTest.value ;
+            tmpFld = "Y3_0" + i.toString();
+            url = url + "&"+tmpFld+"="+k.toString() ;
+       }
+
+// Payr 4
+       target = "Payr4_0" + i.toString();
+       showTest = document.getElementById(target);
+       if (showTest) {
+            k = showTest.value ;
+            tmpFld = "Y4_0" + i.toString();
+            url = url + "&"+tmpFld+"="+k.toString() ;
+       }
+//------------------------------------------------------------------------------???
+
+    }
+
+//alert(" -- within index.html:URLConstruct() - tree url: "+url);
+//sleep(1);
+
+//DEBUG
+//document.getElementById('Debug').innerHTML = url ;
+//-------------------------
+//update left panel
+//-------------------------
+    target = "treemenu";
+    showTest = document.getElementById(target);
+    if(showTest) {
+        
+//debug
+//alert(" -- tree  updated! ");
+        
+       showTest.src = url; 
+    }
+
+//flag ready
+document.dau.DAUReady.value="1";
+
+    return url;
+}
+
+//==============================================================================
+// function fillParas
+//==============================================================================
+function UptMain(responseText) {
+    
+// Debug + Oct.07.2011
+//alert(" -- within UptMain - responseText :"+ responseText);
+	
+	var rData = JSON.parse(responseText);
+
+        var showTest;
+	var target;
+        var tmpStg = "" ;
+        var j = 0;
+
+
+// + Debug Oct.07.2011
+//alert(" -- within UptMain -  rData.length : " + rData.length) ;
+
+        for (i = 0; i < rData.length; i++) {
+
+// + Debug Oct.07.2011
+//alert(" -- within fillParas - i: "+i+" rData OID: " + rData[i]['OID']) ;
+            switch (rData[i]['OID']) {
+//-----------------------------------------
+// DAU Cfg - 0x1010		
+//-----------------------------------------
+                case 4112:
+/*
+alert(" -- within UptMain - 4112 - i:"+i+"- OID : "+rData[i]['OID']+"-BCnt: "+rData[i]['BandCnt']+" ") ;
+alert(" -- within UptMain - 4112 - i:"+i+"- OID : "+rData[i]['OID']+"-Serl: "+rData[i]['serial']+" ") ;
+alert(" -- within UptMain - 4112 - i:"+i+"- OID : "+rData[i]['OID']+"-I/O: "+rData[i]['IOdoor']+" ") ;
+alert(" -- within UptMain - 4112 - i:"+i+"- OID : "+rData[i]['OID']+"-Ver: "+rData[i]['SWver']+" ") ;
+alert(" -- UptMain- 4112 - i:"+i+"- OID : "+rData[i]['OID']+"-RF Band 1: "+rData[i]['RfBdTyp1']+"-BTSiTyp 1: "+rData[i]['BTSiTyp1']+" ") ;
+alert(" -- UptMain- 4112 - i:"+i+"- OID : "+rData[i]['OID']+"-RF Band 2: "+rData[i]['RfBdTyp2']+"-BTSiTyp 2: "+rData[i]['BTSiTyp2']+" ") ;
+alert(" -- UptMain- 4112 - i:"+i+"- OID : "+rData[i]['OID']+"-RF Band 3: "+rData[i]['RfBdTyp3']+"-BTSiTyp 3: "+rData[i]['BTSiTyp3']+" ") ;
+alert(" -- UptMain- 4112 - i:"+i+"- OID : "+rData[i]['OID']+"-RF Band 4: "+rData[i]['RfBdTyp4']+"-BTSiTyp 4: "+rData[i]['BTSiTyp4']+" ") ;
+alert(" -- within UptMain - 4112 - i:"+i+"- OID : "+rData[i]['OID']+"-Dev Nm: "+rData[i]['DevName']+" ") ;
+*/
+                    document.dau.BandCnt.value = rData[i]['BandCnt'];
+                    document.dau.serial.value  = rData[i]['serial'];
+                    document.dau.IOdoor.value  = rData[i]['IOdoor'];
+                    document.dau.SWver.value   = rData[i]['SWver'];
+                    document.dau.RfBdTyp1.value= rData[i]['RfBdTyp1'];
+                    document.dau.BTSiTyp1.value= rData[i]['BTSiTyp1'];
+                    document.dau.RfBdTyp2.value= rData[i]['RfBdTyp2'];
+                    document.dau.BTSiTyp2.value= rData[i]['BTSiTyp2'];
+                    document.dau.RfBdTyp3.value= rData[i]['RfBdTyp3'];
+                    document.dau.BTSiTyp3.value= rData[i]['BTSiTyp3'];
+                    document.dau.RfBdTyp4.value= rData[i]['RfBdTyp4'];
+                    document.dau.BTSiTyp4.value= rData[i]['BTSiTyp4'];
+//alert("-- 4112 i:"+i+" - DevName:"+rData[i]['DevName']);                       
+                    //-------------------------------
+                    // Dev Name - if empty then use port no. and Serial No.                   
+                    //-------------------------------
+                    if (rData[i]['DevName'] == "n/a") {
+                        tmpStg = "DAU_" + rData[i]['serial'];
+                        document.dau.DevName.value = tmpStg;                        
+//alert("-- 4112 i:"+i+" - tmpStg: "+tmpStg+" - DevName:"+document.dau.DevName.value);                       
+                    } else {
+                        document.dau.DevName.value = rData[i]['DevName'];                        
+                    }
+                    //-------------------------------
+                    // no. of DRU associated with DAU plus DAU                   
+                    //-------------------------------
+                    j = rData.length;
+                    document.dau.DRUCnt.value = j.toString();
+
+
+//alert("-- 4112 j:"+j);
+//Debug ???
+document.getElementById('Debug').innerHTML = j.toString() ;
+
+                    
+                    break;
+//-----------------------------------------
+// DRU Cfg - 0x1011	
+//-----------------------------------------
+                case 4113:
+
+/*
+alert(" -- within UptMain - 4113 - i:"+i+"- OID : "+rData[i]['OID']) ;
+alert(" -- within UptMain - 4113 - i:"+i+"- OID : "+rData[i]['OID']+"-BCnt: "+rData[i]['BandCnt']+" ") ;
+alert(" -- within UptMain - 4113 - i:"+i+"- OID : "+rData[i]['OID']+"-Serl: "+rData[i]['serial']+" ") ;
+alert(" -- within UptMain - 4113 - i:"+i+"- OID : "+rData[i]['OID']+"-I/O: "+rData[i]['IOdoor']+" ") ;
+alert(" -- within UptMain - 4113 - i:"+i+"- OID : "+rData[i]['OID']+"-Ver: "+rData[i]['SWver']+" ") ;
+alert(" -- UptMain- 4113 - i:"+i+"- OID : "+rData[i]['OID']+"-RF Band 1: "+rData[i]['RfBdTyp1']+"-Payr 1: "+rData[i]['Payr1']+" ") ;
+alert(" -- UptMain- 4113 - i:"+i+"- OID : "+rData[i]['OID']+"-RF Band 2: "+rData[i]['RfBdTyp2']+"-Payr 2: "+rData[i]['Payr2']+" ") ;
+alert(" -- UptMain- 4113 - i:"+i+"- OID : "+rData[i]['OID']+"-RF Band 3: "+rData[i]['RfBdTyp3']+"-Payr 3: "+rData[i]['Payr3']+" ") ;
+alert(" -- UptMain- 4113 - i:"+i+"- OID : "+rData[i]['OID']+"-RF Band 4: "+rData[i]['RfBdTyp4']+"-Payr 4: "+rData[i]['Payr4']+" ") ;
+alert(" -- within UptMain - 4113 - i:"+i+"- NetwkIP: "+rData[i]['NetwkIP']) ;
+alert(" -- within UptMain - 4113 - i:"+i+"- OID : "+rData[i]['OID']+"-Dev Nm: "+rData[i]['DevName']+" ") ;
+*/
+
+// Band Count
+                    target = "BandCnt_0" + i.toString();
+                    showTest = document.getElementById(target);
+                    if (showTest) {
+//alert("-- 4113 i:"+i+" - BandCnt:"+showTest.value+" - target: "+target);                       
+                        showTest.value = rData[i]['BandCnt'];
+                    }
+// Serial No.
+                    target = "serial_0" + i.toString();
+                    showTest = document.getElementById(target);
+                    if (showTest) {
+//alert("-- 4113 i:"+i+" - serial:"+showTest.value+" - target: "+target);                       
+                        showTest.value = rData[i]['serial'];
+                    }
+// Indoor or Outdoor DRU
+                    target = "IOdoor_0" + i.toString();
+                    showTest = document.getElementById(target);
+                    if (showTest) {
+                        showTest.value = rData[i]['IOdoor'];
+                    }
+//S/W Version
+                    target = "SWver_0" + i.toString();
+                    showTest = document.getElementById(target);
+                    if (showTest) {
+                        showTest.value = rData[i]['SWver'];
+                    }
+//------------------------------------------------------------------------------???
+// Network IP                    
+                    target = "NetwkIP_0" + i.toString();
+                    showTest = document.getElementById(target);
+                    if (showTest) {
+                        showTest.value = rData[i]['NetwkIP'];
+                    }
+//------------------------------------------------------------------------------???
+                    
+//RF band Type 1
+                    target = "RfBdTyp1_0" + i.toString();
+                    showTest = document.getElementById(target);
+                    if (showTest) {
+                        showTest.value = rData[i]['RfBdTyp1'];
+                    }
+// Payr1
+                    target = "Payr1_0" + i.toString();
+                    showTest = document.getElementById(target);
+                    if (showTest) {
+                        showTest.value = rData[i]['Payr1'];
+                    }
+//RF band Type 2
+                    target = "RfBdTyp2_0" + i.toString();
+                    showTest = document.getElementById(target);
+                    if (showTest) {
+                        showTest.value = rData[i]['RfBdTyp2'];
+                    }
+// Payr2
+                    target = "Payr2_0" + i.toString();
+                    showTest = document.getElementById(target);
+                    if (showTest) {
+                        showTest.value = rData[i]['Payr2'];
+                    }
+//RF band Type 3
+                    target = "RfBdTyp3_0" + i.toString();
+                    showTest = document.getElementById(target);
+                    if (showTest) {
+                        showTest.value = rData[i]['RfBdTyp3'];
+                    }
+// Payr3
+                    target = "Payr3_0" + i.toString();
+                    showTest = document.getElementById(target);
+                    if (showTest) {
+                        showTest.value = rData[i]['Payr3'];
+                    }
+//RF band Type 4
+                    target = "RfBdTyp4_0" + i.toString();
+                    showTest = document.getElementById(target);
+                    if (showTest) {
+                        showTest.value = rData[i]['RfBdTyp4'];
+                    }
+// Payr4
+                    target = "Payr4_0" + i.toString();
+                    showTest = document.getElementById(target);
+                    if (showTest) {
+                        showTest.value = rData[i]['Payr4'];
+                    }
+                    //-------------------------------
+                    // Dev Name - if empty then use port no. and Serial No.                   
+                    //-------------------------------
+                    if (rData[i]['DevName'] == "n/a") {
+                        tmpStg = "DRU_" + rData[i]['serial'];
+                    } else {
+                        tmpStg = rData[i]['DevName'];
+                    }
+                    target = "DevName_0" + i.toString();
+                    showTest = document.getElementById(target);
+                    if (showTest) {
+                        showTest.value = tmpStg;
+//alert("-- 4113 i:"+i+" - tmpStg: "+tmpStg+" - DevName:"+showTest.value);                       
+                    }
+                    
+                    break;
+
+            }                                    // end switch
+
+        }                                        // end for
+        
+
+}
+
+//==============================================================================
+// function MgCtlRdData
+//==============================================================================
+function MgCtlRdData(dataSource) {
+
+//alert(" -- MgCtlRdData -- is called ! ");
+    var id;
+    var nDRUcnt = 0;
+//+-----------------------------------------
+//| Check Browser and Open Ajax channel 
+//+-----------------------------------------
+    var XMLHttpRequestObject = false;
+    if (window.XMLHttpRequest) {
+        XMLHttpRequestObject = new XMLHttpRequest();
+    } else if (window.ActiveXObject) {
+        XMLHttpRequestObject = new ActiveXObject("Microsoft.XMLHTTP");
+    }
+
+    if (XMLHttpRequestObject) {
+
+	//+-------------------------------------------------------------------------------
+        //|  if use async=false, do NOT write an onreadystatechange function - just put the code after the send() statement:
+	//+-----------------------------------------------------------------------------
+	    XMLHttpRequestObject.open("POST", dataSource, true);  
+        
+//alert(" within readData()- Ajax open channel ..." ) ; 
+	//+-----------------------------------------------------------------------------
+	//| Return Message Block 
+	//+-----------------------------------------------------------------------------
+        XMLHttpRequestObject.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+        XMLHttpRequestObject.onreadystatechange = function() {
+            if (XMLHttpRequestObject.readyState == 4 &&
+                XMLHttpRequestObject.status == 200) {
+
+alert(" within readData()- Ajax open channel - responseText : " + XMLHttpRequestObject.responseText);
+              UptMain(XMLHttpRequestObject.responseText);
+              
+//------------------------------------------------------------------------------???              
+//alert(" ??? calling URLConstruct() ");
+alert(" MQ for Boot Ctrl Seq. received ! ");
+//sleep(1);
+            //--------------------------------------------
+            // Check the no. of returned DRU count
+            // as MgCtlRdData() fork the process to send MQ 
+            // and delay occurs before it receives the returned MQ
+            // Hold the process to display the tree, and poll the field
+            //--------------------------------------------
+            id = document.getElementById("DRUCnt");
+            if (id) {
+// debug        
+//alert(" -- DRU cnt:"+id.value); 
+                nDRUcnt = parseInt(id.value);
+            }    
+            // notify the user that MQ not returned
+            if(nDRUcnt==0) {
+                alert("please refresh the page to display tree !") 
+            }
+            //Construct URL
+            URLConstruct();
+//------------------------------------------------------------------------------???              
+              
+            }
+        }
+
+	//+-----------------------------------------------------------------------------
+        //| create the oid array with npCmd setting
+	//+-----------------------------------------------------------------------------
+        var sArray = new Array;
+        sArray[0] = new Array(0x1005, 0);
+        var data = JSON.stringify(sArray);
+// 
+//alert(" -- dump array of data send --\n");
+//var msg = "";
+//for(i=0;i<sArray.length;i++) { msg += sArray[i] + "\n"; }
+//alert(msg);
+ 
+//      XMLHttpRequestObject.send('data=' + data + '&type=note');
+// include the device Id to tell this is DAU Boot Sequence
+        XMLHttpRequestObject.send('data=' + data + '&type=note&did=0');
+        
+    }
+
+//alert(" READY!");
+}
+    
+//==============================================================================
+// function clock
+//==============================================================================
+function clock() 
+{
+    var RightNow = new Date()
+    var hr = RightNow.getHours()
+    var min = RightNow.getMinutes()
+    var sec = RightNow.getSeconds()
+    var printIt = "Time: " +hr+ ":" +min+ ":" +sec
+    document.getElementById('clockDiv').innerHTML = printIt;
+    setTimeout("clock()","1000");
+}
+</SCRIPT> 
+
+<link rel="stylesheet" type="text/css" href="style/style.css" />
+</head>
+
+<!-- + Oct.14.2011 -->
+<body onload="initMain();" >
+    <div class="container">
+<!--------------------------------------------------------------------- Header Block ---------------------------------------------------------------------->
+        <div class="header">
+                <div class="header_top" style="background-image:url(i/si2i_Management_System_Header.jpg);background-repeat:repeat-x; background-position:right">
+                        <div class="logo"><img src="i/si2_logo.jpg" alt="Sirius Innovations Logo" width="150" height="100" title="Sirius Innovations Logo"/></div>
+			<div class="person">
+				<table border="0" cellspacing="1" cellpadding="1"  > 
+					<tr>
+                                            <td><div id = "LoginDiv" >Login: Administrator</div></td><td>&nbsp;</td>
+<!-- Debug Area + 09.Nov.2011-->
+                                            <td><div id = "Debug">&nbsp;</div></td>
+                                        </tr>
+					<tr><td><div id = "clockDiv"> &nbsp; </div></td></tr>
+				</table>
+			</div>
+			<div class="state"><p>Logout</p></div>
+			<div class="disappear"></div>
+			<div class="clearboth"></div>
+                </div>
+                <div class="header_bottom">
+			<span class="h_b_left">Management System</span>
+<!-- span class="h_b_right">Version: 0.1.50</span  -->
+			<span class="h_b_right">Version: 1.2.0.97</span>
+			<div class="clearboth"></div>
+                </div>
+	 </div>    
+<!--------------------------------------------------------------------- Body Block ---------------------------------------------------------------------->
+        <div class="container"> 
+<!-- left panel - Default Tree Menu -->            
+                <div class="sideleft"><iframe  frameborder="0" id="treemenu" src="wait.html" ></iframe></div>
+<!-- div class="sideleft"><iframe  frameborder="0" id="treemenu" src="menu.html?DRUCnt=2&DevName=&BandCnt=4&IOdoor=o&RfBdTyp1=2&BTSiTyp1=1&RfBdTyp2=3&BTSiTyp2=1&RfBdTyp3=2&BTSiTyp3=1&RfBdTyp4=3&BTSiTyp4=1&sid=0x12345678&did=0&deviceMode=DAU_quadband&DevName_01=&IO_01=o&IP_01=126.1.168.192&R1_01=2&R2_01=3&R3_01=160&R4_01=1&Y1_01=20&Y2_01=20&Y3_01=0&Y4_01=111" ></iframe></div  -->
+                <div class="sidecenter"></div>
+<!--div class="sideright"><iframe name="showwindow" frameborder="0" id="mainmenu" src="dauConfig.html?did=0&sid=0x12345678&deviceMode=DAU_quadband" ></iframe></div  -->
+<div class="sideright"><iframe name="showwindow" frameborder="0" id="mainmenu" src="wait.html" ></iframe></div>
+                <div class="clearboth"></div>    
+        </div>
+<!----------------------------------------------  Block of Hidden fields holding DAU and DRU Cfg  + 08.Nov.2011 ------------------------------------------>
+        <div class="container">    
+
+            <FORM NAME="dau">
+                <input id="BandCnt"  NAME="BandCnt"  type="hidden"/>
+                <input id="serial"   NAME="serial"   type="hidden"/>
+                <input id="IOdoor"   NAME="IOdoor"   type="hidden"/>
+                <input id="SWver"    NAME="SWver"    type="hidden"/>
+                <input id="RfBdTyp1" NAME="RfBdTyp1" type="hidden"/>
+                <input id="BTSiTyp1" NAME="BTSiTyp1" type="hidden"/>
+                <input id="RfBdTyp2" NAME="RfBdTyp2" type="hidden"/>
+                <input id="BTSiTyp2" NAME="BTSiTyp2" type="hidden"/>
+                <input id="RfBdTyp3" NAME="RfBdTyp3" type="hidden"/>
+                <input id="BTSiTyp3" NAME="BTSiTyp3" type="hidden"/>
+                <input id="RfBdTyp4" NAME="RfBdTyp4" type="hidden"/>
+                <input id="BTSiTyp4" NAME="BTSiTyp4" type="hidden"/>
+                <input id="DevName"  NAME="DevName"  type="hidden"/>
+<!-- init. no. of DRU associated with DAU to zero -->                
+                <input id="DRUCnt"   NAME="DRUCnt"   value="0" type="hidden"/>
+                <input id="DAUReady" NAME="DAUReady" value="0" type="hidden"/>
+<!-- DAU Device Id preset to zero -->
+                <input id="DAUdid"   NAME="DAUdid"   value="0" type="hidden"/>
+<!-- DAU Station Id not used      -->
+                <input id="DAUsid"   NAME="DAUsid"   value="0x12345678" type="hidden"/>
+            </FORM>
+
+            <FORM NAME="dru01">
+                <input id="BandCnt_01"  NAME="BandCnt_01"  type="hidden"/>
+                <input id="serial_01"   NAME="serial_01"   type="hidden"/>
+                <input id="IOdoor_01"   NAME="IOdoor_01"   type="hidden"/>
+                <input id="SWver_01"    NAME="SWver_01"    type="hidden"/>
+                <input id="RfBdTyp1_01" NAME="RfBdTyp1_01" type="hidden"/>
+                <input id="Payr1_01"    NAME="Payr1_01"    type="hidden"/>
+                <input id="RfBdTyp2_01" NAME="RfBdTyp2_01" type="hidden"/>
+                <input id="Payr2_01"    NAME="Payr2_01"    type="hidden"/>
+                <input id="RfBdTyp3_01" NAME="RfBdTyp3_01" type="hidden"/>
+                <input id="Payr3_01"    NAME="Payr3_01"    type="hidden"/>
+                <input id="RfBdTyp4_01" NAME="RfBdTyp4_01" type="hidden"/>
+                <input id="Payr4_01"    NAME="Payr4_01"    type="hidden"/>
+                <input id="DevName_01"  NAME="DevName_01"  type="hidden"/>
+<!-- + Nov.15.2011 -->                
+                <input id="NetwkIP_01"  NAME="NetwkIP_01"  type="hidden"/>
+            </FORM>
+            
+            <FORM NAME="dru02">
+                <input id="BandCnt_02"  NAME="BandCnt_02"  type="hidden"/>
+                <input id="serial_02"   NAME="serial_02"   type="hidden"/>
+                <input id="IOdoor_02"   NAME="IOdoor_02"   type="hidden"/>
+                <input id="SWver_02"    NAME="SWver_02"    type="hidden"/>
+                <input id="RfBdTyp1_02" NAME="RfBdTyp1_02" type="hidden"/>
+                <input id="Payr1_02"    NAME="Payr1_02"    type="hidden"/>
+                <input id="RfBdTyp2_02" NAME="RfBdTyp2_02" type="hidden"/>
+                <input id="Payr2_02"    NAME="Payr2_02"    type="hidden"/>
+                <input id="RfBdTyp3_02" NAME="RfBdTyp3_02" type="hidden"/>
+                <input id="Payr3_02"    NAME="Payr3_02"    type="hidden"/>
+                <input id="RfBdTyp4_02" NAME="RfBdTyp4_02" type="hidden"/>
+                <input id="Payr4_02"    NAME="Payr4_02"    type="hidden"/>
+                <input id="DevName_02"  NAME="DevName_02"  type="hidden"/>
+<!-- + Nov.15.2011 -->                
+                <input id="NetwkIP_02"  NAME="NetwkIP_02"  type="hidden"/>
+            </FORM>
+
+            <FORM NAME="dru03">
+                <input id="BandCnt_03"  NAME="BandCnt_03"  type="hidden"/>
+                <input id="serial_03"   NAME="serial_03"   type="hidden"/>
+                <input id="IOdoor_03"   NAME="IOdoor_03"   type="hidden"/>
+                <input id="SWver_03"    NAME="SWver_03"    type="hidden"/>
+                <input id="RfBdTyp1_03" NAME="RfBdTyp1_03" type="hidden"/>
+                <input id="Payr1_03"    NAME="Payr1_03"    type="hidden"/>
+                <input id="RfBdTyp2_03" NAME="RfBdTyp2_03" type="hidden"/>
+                <input id="Payr2_03"    NAME="Payr2_03"    type="hidden"/>
+                <input id="RfBdTyp3_03" NAME="RfBdTyp3_03" type="hidden"/>
+                <input id="Payr3_03"    NAME="Payr3_03"    type="hidden"/>
+                <input id="RfBdTyp4_03" NAME="RfBdTyp4_03" type="hidden"/>
+                <input id="Payr4_03"    NAME="Payr4_03"    type="hidden"/>
+                <input id="DevName_03"  NAME="DevName_03"  type="hidden"/>
+<!-- + Nov.15.2011 -->                
+                <input id="NetwkIP_03"  NAME="NetwkIP_03"  type="hidden"/>
+            </FORM>
+
+            <FORM NAME="dru04">
+                <input id="BandCnt_04"  NAME="BandCnt_04"  type="hidden"/>
+                <input id="serial_04"   NAME="serial_04"   type="hidden"/>
+                <input id="IOdoor_04"   NAME="IOdoor_04"   type="hidden"/>
+                <input id="SWver_04"    NAME="SWver_04"    type="hidden"/>
+                <input id="RfBdTyp1_04" NAME="RfBdTyp1_04" type="hidden"/>
+                <input id="Payr1_04"    NAME="Payr1_04"    type="hidden"/>
+                <input id="RfBdTyp2_04" NAME="RfBdTyp2_04" type="hidden"/>
+                <input id="Payr2_04"    NAME="Payr2_04"    type="hidden"/>
+                <input id="RfBdTyp3_04" NAME="RfBdTyp3_04" type="hidden"/>
+                <input id="Payr3_04"    NAME="Payr3_04"    type="hidden"/>
+                <input id="RfBdTyp4_04" NAME="RfBdTyp4_04" type="hidden"/>
+                <input id="Payr4_04"    NAME="Payr4_04"    type="hidden"/>
+                <input id="DevName_04"  NAME="DevName_04"  type="hidden"/>
+<!-- + Nov.15.2011 -->                
+                <input id="NetwkIP_04"  NAME="NetwkIP_04"  type="hidden"/>
+            </FORM>
+
+            <FORM NAME="dru05">
+                <input id="BandCnt_05"  NAME="BandCnt_05"  type="hidden"/>
+                <input id="serial_05"   NAME="serial_05"   type="hidden"/>
+                <input id="IOdoor_05"   NAME="IOdoor_05"   type="hidden"/>
+                <input id="SWver_05"    NAME="SWver_05"    type="hidden"/>
+                <input id="RfBdTyp1_05" NAME="RfBdTyp1_05" type="hidden"/>
+                <input id="Payr1_05"    NAME="Payr1_05"    type="hidden"/>
+                <input id="RfBdTyp2_05" NAME="RfBdTyp2_05" type="hidden"/>
+                <input id="Payr2_05"    NAME="Payr2_05"    type="hidden"/>
+                <input id="RfBdTyp3_05" NAME="RfBdTyp3_05" type="hidden"/>
+                <input id="Payr3_05"    NAME="Payr3_05"    type="hidden"/>
+                <input id="RfBdTyp4_05" NAME="RfBdTyp4_05" type="hidden"/>
+                <input id="Payr4_05"    NAME="Payr4_05"    type="hidden"/>
+                <input id="DevName_05"  NAME="DevName_05"  type="hidden"/>
+<!-- + Nov.15.2011 -->                
+                <input id="NetwkIP_05"  NAME="NetwkIP_05"  type="hidden"/>
+            </FORM>
+
+            <FORM NAME="dru06">
+                <input id="BandCnt_06"  NAME="BandCnt_06"  type="hidden"/>
+                <input id="serial_06"   NAME="serial_06"   type="hidden"/>
+                <input id="IOdoor_06"   NAME="IOdoor_06"   type="hidden"/>
+                <input id="SWver_06"    NAME="SWver_06"    type="hidden"/>
+                <input id="RfBdTyp1_06" NAME="RfBdTyp1_06" type="hidden"/>
+                <input id="Payr1_06"    NAME="Payr1_06"    type="hidden"/>
+                <input id="RfBdTyp2_06" NAME="RfBdTyp2_06" type="hidden"/>
+                <input id="Payr2_06"    NAME="Payr2_06"    type="hidden"/>
+                <input id="RfBdTyp3_06" NAME="RfBdTyp3_06" type="hidden"/>
+                <input id="Payr3_06"    NAME="Payr3_06"    type="hidden"/>
+                <input id="RfBdTyp4_06" NAME="RfBdTyp4_06" type="hidden"/>
+                <input id="Payr4_06"    NAME="Payr4_06"    type="hidden"/>
+                <input id="DevName_06"  NAME="DevName_06"  type="hidden"/>
+<!-- + Nov.15.2011 -->                
+                <input id="NetwkIP_06"  NAME="NetwkIP_06"  type="hidden"/>
+            </FORM>
+            
+            
+        </div>    
+<!--------------------------------------------------------------------- Footer Block ---------------------------------------------------------------------->
+	<div class="footer">
+            <span>Copyright: Sirius Innovations Inc. @ 2011</span>
+	</div>
+
+  </div>  
+</body>
+</html>

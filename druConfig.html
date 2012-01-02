@@ -1,0 +1,1060 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<!--   caller:   rwDAU.js - dauConfig() -->
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Sirius Innovations Inc @ 2011</title>
+<script type = "text/javascript" src = "js/json2.js"></script>
+<script type = "text/javascript" src = "js/common.js"></script>
+<!-- script type = "text/javascript" src = "js/dauConfig.js"></script -->
+
+<script type="text/javascript">
+
+// Debug + Oct.24.2011
+function test() {
+//    alert("window is tested  completely");
+    //----------------------------------------
+    // Retrieve content from caller
+    //----------------------------------------
+    var deviceID   = 0;
+    var l = location.href;
+// + Debug Oct.24.2011
+//    alert(" -- within druConfig.html - test - current location - "+l) ; 
+
+    var left = l.indexOf("?")+1;
+    //alert(" left - "+left);
+    var tmpstg = l.substring(left);
+    //alert(" tmpstg - "+tmpstg);
+// + Debug Oct.24.2011
+    alert(" -- within druConfig.html - test - param from caller - "+tmpstg) ; 
+}
+
+//==============================================================================
+// function UptDRUBsel()
+//==============================================================================
+function UptDRUBsel(responseText, R1, R2, D1, D2, D3, D4, maxBand) {
+    
+//alert(" -- within UptDRUBsel() - responseText :"+ responseText);
+//alert(" -- within UptDRUBsel() - R1 :"+ R1);
+//alert(" -- within UptDRUBsel() - R2 :"+ R2);
+//alert(" -- within UptDRUBsel() - D1 :"+ D1);
+//alert(" -- within UptDRUBsel() - D2 :"+ D2);
+//alert(" -- within UptDRUBsel() - D3 :"+ D3);
+//alert(" -- within UptDRUBsel() - D4 :"+ D4);
+
+    var rData = JSON.parse(responseText);
+// debug
+//alert(" -- len :"+rData.length);
+//alert(" -- Obj Id :"+rData[0]['OID']);
+    var TstName = DevContent = StgRpt = "";	
+    var bFlag01 = bFlag02 = "0";
+
+    // temp buffer holding DAU Cfg Band 1 to 4 Base Sector Selection contents
+    var cF710_1 = cF710_2 = cF710_3 = cF710_4 = dFld = dFldValue = "" ;
+    var j, cTmpValue;
+    //-------------------------------------
+    // multiple BTS Sector Selection
+    //-------------------------------------
+    for (i=1; i <= rData.length; i++) {
+        j = i - 1;
+        if (rData[j]['OID'] == 1808 ) {
+            cTmpValue = rData[j]['Content'] ;
+//alert(" -- i: " +i+" cTmpValue: "+cTmpValue);
+            switch(i) {
+                case 1: 
+//alert(" -- 1 match - content :"+cTmpValue);
+                    cF710_1 = cTmpValue; 
+//alert(" -- 1 match - cF710_1 :"+cF710_1);
+                    break;
+                case 2: 
+//alert(" -- 2 match - content :"+cTmpValue);
+                    cF710_2 = cTmpValue; 
+//alert(" -- 2 match - cF710_2 :"+cF710_2);
+                    break;
+                case 3: 
+//alert(" -- 3 match - content :"+cTmpValue);
+                    cF710_3 = cTmpValue; 
+//alert(" -- 3 match - cF710_3 :"+cF710_3);
+                    break;
+                case 4: 
+//alert(" -- 4 match - content :"+cTmpValue);
+                    cF710_4 = cTmpValue; 
+//alert(" -- 4 match - cF710_4 :"+cF710_4);
+                    break;
+            }
+        }
+    }
+
+    //-------------------------------------
+    // Update BTS list for Band 1             
+    //-------------------------------------
+    for (i=1; i<=maxBand; i++) {
+        TstName = "D" + i.toString()  ;
+//alert(" -- TstName: "+TstName);
+        DevContent = eval(TstName) ;
+//alert(" -- DevContent: "+DevContent);
+        dFld = "cF710_" + i.toString() ;
+//alert(" -- dFld: "+dFld);
+        dFldValue = eval(dFld) ;
+//alert(" -- dFldValue: "+dFldValue);
+        if ( R1 == DevContent ) {
+//alert(" -- R1 matches ! R1:"+R1+" - i: "+i+" - dFld: "+dFld+" - dFldValue: "+dFldValue);
+            document.drucfg.lstBTS1.options[document.drucfg.lstBTS1.length] = new Option(dFldValue);
+            bFlag01 = "1" ;
+        }
+    }
+    //-------------------------------------
+    // Update BTS list for Band 2 
+    //-------------------------------------
+    for (i=1; i<=maxBand; i++) {
+        TstName = "D" + i.toString()  ;
+//alert(" -- TstName: "+TstName);
+        DevContent = eval(TstName) ;
+//alert(" -- DevContent: "+DevContent);
+        dFld = "cF710_" + i.toString() ;
+//alert(" -- dFld: "+dFld);
+        dFldValue = eval(dFld) ;
+//alert(" -- dFldValue: "+dFldValue);
+        if ( R2 == DevContent ) {
+//alert(" -- R2 matches ! R2:"+R2+" - i: "+i+" - dFld: "+dFld+" - dFldValue: "+dFldValue);
+            document.drucfg.lstBTS2.options[document.drucfg.lstBTS2.length] = new Option(dFldValue);
+            bFlag02 = "1" ;
+
+        }
+    }
+    
+    //-------------------------------------
+    // Disable the SET for Band 1 if base sector selection is empty 
+    //-------------------------------------
+    if (bFlag01=="1") {
+        document.drucfg.lstBTS1.disabled=false;        
+    } else {
+        document.drucfg.lstBTS1.disabled=true;        
+    }
+    //-------------------------------------
+    // Disable the SET for Band 2 if base sector selection is empty 
+    //-------------------------------------
+    if (bFlag02=="1") {
+        document.drucfg.lstBTS2.disabled=false;        
+    } else {
+        document.drucfg.lstBTS2.disabled=true;        
+    }
+
+    //-------------------------------------
+    // notify user the Read cycle for DRU Cfg is completed 
+    //-------------------------------------
+    document.getElementById('druCfgMsg').innerHTML = "DRU Config read cycle completed ... ";
+    
+}
+
+//==============================================================================
+// function rdDAUCfg is based on dauConfig.html::readData()
+//==============================================================================
+function rdDAUCfg(dataSource,  R1, R2, D1, D2, D3, D4, deviceID, deviceMode, DAUmb) {
+
+    document.getElementById('druCfgMsg').innerHTML = "Loading data from device...";
+//+-----------------------------------------
+//| Check Browser and Open Ajax channel 
+//+-----------------------------------------
+    var XMLHttpRequestObject = false;
+    if (window.XMLHttpRequest) {
+        XMLHttpRequestObject = new XMLHttpRequest();
+    } else if (window.ActiveXObject) {
+        XMLHttpRequestObject = new ActiveXObject("Microsoft.XMLHTTP");
+    }
+    if (XMLHttpRequestObject) {
+        XMLHttpRequestObject.open("POST", dataSource);
+    
+//alert(" within rdDAUCfg()- Ajax open channel for DRU Cfg ..." ) ; 
+//+-----------------------------------------
+//| Return Message Block 
+//+-----------------------------------------
+        XMLHttpRequestObject.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+        XMLHttpRequestObject.onreadystatechange = function() {
+            if (XMLHttpRequestObject.readyState == 4 &&
+                XMLHttpRequestObject.status == 200) {
+//alert(" -- within dauConfig.html-rdDAUCfg() - Ajax open channel - responseText : " + XMLHttpRequestObject.responseText);
+//alert(" -- within dauConfig.html-rdDAUCfg() - DAUmb :" +  DAUmb);
+                UptDRUBsel(XMLHttpRequestObject.responseText, R1, R2, D1, D2, D3, D4, DAUmb );
+            }
+        }
+        
+//alert(" -- within rdDAUCfg(), preparing data ... ");
+//+-----------------------------------------
+//| create the oid array with npCmd setting
+//| note: BTS Sector Selection - 0x710
+//+-----------------------------------------
+        var sArray = new Array;
+        var index = 0; //index for sArray
+        var band  = 1;
+        var maxband = 4;
+
+// multiple BTS Sector Selection and Interface Set up
+        for (j=band;j<=maxband;j++) {
+//alert(" j: "+j);            
+            sArray[index] = new Array(0x710,j);
+            index++;
+        }
+
+// debug
+//alert(" -- dump array of data send --\n");
+//var msg = "";
+//for(i=0;i<sArray.length;i++) { msg += sArray[i] + "\n"; }
+//alert(msg);
+
+        var data = JSON.stringify(sArray);
+//+-----------------------------------------
+//| rxParam() retrieves Device ID, StationID, Device Mode
+//+-----------------------------------------
+//alert(" -- did="+deviceID+"&deviceMode="+deviceMode);        
+        XMLHttpRequestObject.send('data=' + data + '&type=read' + '&sid=0&did=' + deviceID+"&deviceMode="+deviceMode);
+        
+    }
+}
+
+//==============================================================================
+// function UptDRUCfgLbl
+// note: routine RFBdType() defined at common.js
+//==============================================================================
+function UptDRUCfgLbl(dNm, IO, dMode, R1, R2, Y1, Y2) {
+    
+    
+    var showTest;
+    //-------------------------------------
+    // update DRU Name/Lable and DRU Type
+    // focused on DAU name when start up
+    //-------------------------------------
+    showTest = document.getElementById('0x702');
+    if (showTest){
+        showTest.value = dNm;
+        showTest.focus();
+    } 
+    //-------------------------------------
+    //  DRU I/O type 
+    //-------------------------------------
+    showTest = document.getElementById('DRUioType');
+    if (showTest){
+        showTest.innerHTML = "DRU Type: " + IO +"-"+dMode;
+    }
+    //-------------------------------------
+    //  RF Band 1
+    //-------------------------------------
+    showTest = document.getElementById('druRfBdTyp1');
+    if (showTest){
+        showTest.innerHTML = RFBdType(parseInt(R1))  ;
+    }
+    //-------------------------------------
+    //  RF Band 2
+    //-------------------------------------
+    showTest = document.getElementById('druRfBdTyp2');
+    if (showTest){
+        showTest.innerHTML = RFBdType(parseInt(R2))  ;
+    }
+    //-------------------------------------
+    //  Payr    1
+    //-------------------------------------
+    showTest = document.getElementById('druPayr1');
+    if (showTest){
+        showTest.innerHTML = Y1  ;
+    }
+    //-------------------------------------
+    //  Payr    2
+    //-------------------------------------
+    showTest = document.getElementById('druPayr2');
+    if (showTest){
+        showTest.innerHTML = Y2  ;
+    }
+
+    
+}
+
+//==============================================================================
+// function ChkDAUbts
+// note: the following code is based on readData() of dauConfig.html
+//|       BTS Sector Selection - 0x710
+//==============================================================================
+function ChkDAUbts(R1, R2, D1, D2, D3, D4, dauid, daumode ) {
+    
+        var sArray = new Array;
+    
+        var index = 0; //index for oidArray
+        var band  = 1;
+        var DAUmaxband = 4;
+        var cflag = false;
+        
+        // DRU Band 1
+        for (i = 1;  i<=DAUmaxband; i++) {
+            TstName = "D" + i.toString();
+            DevContent = eval(TstName) ;
+// debug
+//alert(" -- within ChkDAUbts - TstName:"+TstName+" - DevContent:"+DevContent);
+            if (R1==DevContent) {
+/*                
+               sArray[index] = new Array(0x710,i);
+               index++;
+*/
+//alert(" -- R1 has a match !");
+               cflag = true;
+            }
+        }
+        // DRU Band 2
+        for (i = 1;  i<=DAUmaxband; i++) {
+            TstName = "D" + i.toString();
+            DevContent = eval(TstName) ;
+            if (R2==DevContent) {
+//alert(" -- R2 has a match !");
+               cflag = true;
+            }
+        }
+        // retreive the DAU Cfg if any match
+        if (cflag) {
+            //----------------------------------------
+            // retrieved DAU Name, BTS Sector Selection and Interface Setup
+            //----------------------------------------
+//alert(" -- calling rdDAUCfg() - DAUmaxband: "+DAUmaxband);
+            rdDAUCfg('php/rwParas.php', R1, R2, D1, D2, D3, D4, dauid, daumode, DAUmaxband);
+        }                                             // end if
+
+}
+
+//==============================================================================
+// function ArchvDRUset   
+//==============================================================================
+function ArchvDRUset(DRUdid, NetwkIP, deviceMode)  {
+    
+    document.druArv.DRUdid.value    = DRUdid;
+    document.druArv.NetwkIP.value   = NetwkIP;
+    document.druArv.deviceMode.value= deviceMode;
+    
+}
+//==============================================================================
+// function initDRUCfg
+//==============================================================================
+function initDRUCfg() {
+
+// retrieve params from hyper link
+        var url = location.href;
+
+//alert(" -- within initDRUCfg() - current location - "+url) ; 
+
+        var theRequest = new Object();
+        if (url.indexOf("?") != -1) {
+            var str = url.substr(url.indexOf("?") + 1);
+            strs = str.split("&");
+            for (var i = 0; i < strs.length; i++) {
+                theRequest[strs[i].split("=")[0]] = unescape(strs[i].split("=")[1]);
+            }
+        }
+// DRU Device Name
+        var dNm      = theRequest['dNm'];
+// DRU Indoor or Outdoor 
+        var IO       = theRequest['IO'];
+// DRU device Mode
+        var dMode    = theRequest['deviceMode'];
+// DRU RF Band 1  
+        var R1       = theRequest['R1'];
+// DRU RF Band 2
+        var R2       = theRequest['R2'];
+// DRU payr    1  
+        var Y1       = theRequest['Y1'];
+// DRU payr    2
+        var Y2       = theRequest['Y2'];
+// DRU device Id        
+        var did      = theRequest['did'];
+//----------------
+// DRU IP Address        
+//----------------
+        var IP       = theRequest['IP'];
+//+-----------------------
+//| rx the low byte of the IP address for IpAddrByte regarding MQ Frame Header
+//| see section 3.1 Frame Header @ DAU-Management Interface
+//+-----------------------
+//        var cIpAddrByte = IP.substr(0,IP.indexOf(".")) ;        
+        
+// DAU RF 1        
+        var D1       = theRequest['D1'];
+//alert(" -- within initDRUCfg() - D1:"+D1);        
+// DAU RF 2        
+        var D2       = theRequest['D2'];
+//alert(" -- within initDRUCfg() - D2:"+D2);        
+// DAU RF 3        
+        var D3       = theRequest['D3'];
+//alert(" -- within initDRUCfg() - D3:"+D3);        
+// DAU RF 4        
+        var D4       = theRequest['D4'];
+//alert(" -- within initDRUCfg() - D4:"+D4); 
+// DAU device Id
+        var daudid   = theRequest['daudid'];
+// DAU device Mode
+        var daudMode = theRequest['daudMode'];
+
+
+//alert(" -- within initDRUCfg() - calling UptDRUCfgLbl() -- ");        
+    //+-----------------------
+    //| update DRU Cfg screen labels    
+    //+-----------------------
+    UptDRUCfgLbl(dNm, IO, dMode, R1, R2, Y1, Y2);
+    
+//alert(" -- within initDRUCfg() - calling ChkDAUbts() -- ");        
+    //+-----------------------
+    // retrieved DAU RF regarding BTS Sector Selection 
+    //+-----------------------
+    ChkDAUbts(R1, R2, D1, D2, D3, D4, daudid, daudMode);
+    
+    //+-----------------------
+    //archive param for DRU Rf Band SET
+    //+-----------------------
+    ArchvDRUset(did,IP,dMode) ;
+    
+}
+
+//==============================================================================
+// function setDRUBsel
+//==============================================================================
+function setDRUBsel(dataSource, bandno ) {
+
+// debug
+//alert(" -- setDRUBsel is triggered !");
+
+    if (ChkDRUCfgLst(bandno)) {
+        // BTS sector is selected and is ready to Write
+        wrDRUBsel(dataSource, bandno) ;
+    } else {
+        // notify to select and retry
+        alert("Please select BTS Sector prior to SET ");
+        
+        switch (bandno) {
+            case 1 : 
+                document.drucfg.lstBTS1.focus(); break;
+            case 2 : 
+                document.drucfg.lstBTS2.focus(); break;
+        }                     // end switch  
+    }                         // end if 
+}
+
+//==============================================================================
+// function ChkDRUCfgLst check if corresponding BTS base selection is selected prior to SET
+//==============================================================================
+function ChkDRUCfgLst(bandno) {
+
+// debug
+//alert(" -- ChkDRUCfgLst is called ! ") ;
+
+    var bFlag = false ;
+    switch (bandno) {
+       case 1: 
+//alert(" -- BAND 1  ") ;           
+            if (document.drucfg.lstBTS1.options[document.drucfg.lstBTS1.selectedIndex]) {
+//alert(" -- ChkDRUCfgLst - list 1 checked ! ") ;
+                bFlag = true;
+            }
+            break;
+       case 2: 
+//alert(" -- BAND 2  ") ;           
+            if (document.drucfg.lstBTS2.options[document.drucfg.lstBTS2.selectedIndex]) {
+//alert(" -- ChkDRUCfgLst - list 2 checked ! ") ;
+                bFlag = true;
+            }
+           break;
+    }                         // end switch
+    return bFlag ; 
+}
+
+//==============================================================================
+// function rspDRUset
+//==============================================================================
+function rspDRUset(responseText, bno) {
+    
+//alert(" -- within rspDRUset - responseText :"+ responseText);
+    var rData = JSON.parse(responseText);
+        
+    var showTest;
+    var targetID;
+    var StgFld, StgFlag ;
+    var StgRpt = "";	
+        
+    for (i = 0; i < rData.length; i++) {
+    
+        if (rData[i]['OID'] == 0x710) {
+//alert(" -- Field matches !") ;
+
+// field Object ID	    
+            StgFld = rData[i]['OID'].toString(16) ;
+// content  
+            StgFlag= rData[i]['Content'].toString(16) ;
+            StgRpt = StgRpt + " ; list " + bno + "-" + StgFlag + " " ;
+        } else {
+// unknown data               
+            targetID = ' Object ID ' + rData[i]['OID'].toString(16) + '_' + rData[i]['npCmd'].toString();
+            StgRpt = StgRpt + " ; ** " + targetID + " RX error ! " ;
+        }
+//        
+    }        
+//---------------------------------
+// notify user what the outcome
+//---------------------------------
+    document.getElementById('druCfgMsg').innerHTML = " Write Update: " + StgRpt ;    
+    
+}
+
+
+//==============================================================================
+// function wrDRUBsel
+//==============================================================================
+function wrDRUBsel(dataSource, bandno ) {
+
+// debug
+//alert(" -- wrDRUBsel() is called ! ") ;
+
+    document.getElementById('druCfgMsg').innerHTML = "setting BTS sector selection for RF band " + bandno + " Please wait ... ";
+//+-----------------------------------------------------------------------------
+//| Check Browser and Open Ajax channel 
+//+-----------------------------------------------------------------------------
+    var XMLHttpRequestObject = false;
+    if (window.XMLHttpRequest) {
+        XMLHttpRequestObject = new XMLHttpRequest();
+    } else if (window.ActiveXObject) {
+        XMLHttpRequestObject = new ActiveXObject("Microsoft.XMLHTTP");
+    }
+    
+    if (XMLHttpRequestObject){
+ 	//+-------------------------------------------------------------------------------
+        //|  if use async=false, do NOT write an onreadystatechange function - just put the code after the send() statement:
+	//+-----------------------------------------------------------------------------
+	XMLHttpRequestObject.open("POST", dataSource);  //send the request synchronously 
+ 
+//+-----------------------------------------------------------------------------
+//| Return Message Block 
+//+-----------------------------------------------------------------------------
+       XMLHttpRequestObject.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+        XMLHttpRequestObject.onreadystatechange = function() {
+            if (XMLHttpRequestObject.readyState == 4 &&
+              XMLHttpRequestObject.status == 200) {
+
+// debug
+//        alert(" within wrDRUBsel() - responseText : " + XMLHttpRequestObject.responseText);
+//------------------------------------------------------------------------------
+// In terms of write, if SET is ok, notify but no message update
+//------------------------------------------------------------------------------
+              rspDRUset(XMLHttpRequestObject.responseText, bandno);
+            }
+        }
+//
+        // note: 0x710 - DRU BTS Sector Name
+        var oidArray = new Array();
+        var sArray   = new Array();
+        oidArray[0] = 0x710;
+
+        var nIdx     = 0;
+        //----------------------------------------
+        // RF Band 1
+        //----------------------------------------
+        if (bandno=="1") {
+            while (nIdx < document.drucfg.lstBTS1.length ) {
+                if (document.drucfg.lstBTS1.options[nIdx].selected) {
+                    cStgTmp = document.drucfg.lstBTS1.options[nIdx].text;
+                }
+                nIdx++;
+            }
+        }
+        //----------------------------------------
+        // RF Band 2
+        //----------------------------------------
+        if (bandno=="2") {
+            while (nIdx < document.drucfg.lstBTS2.length ) {
+                if (document.drucfg.lstBTS2.options[nIdx].selected) {
+                    cStgTmp = document.drucfg.lstBTS2.options[nIdx].text;
+                }
+                nIdx++;
+            }
+        }
+        
+        sArray[0] = new Array(oidArray[0],cStgTmp, bandno );
+//-------------------------------------
+// + Debug - to dump array
+//var msg = " - SArray contents\n"; 
+//for(i=0;i<sArray.length;i++) { msg += sArray[i] + "\n"; }
+//alert(msg);
+//-------------------------------------
+        
+        var data = JSON.stringify(sArray);
+        //======================================================================
+        // Obtain the Station ID, Device ID amd Device Mode from caller
+        //======================================================================
+/*        
+        var l = location.href;
+        var left = l.indexOf("?")+1;
+        var param = l.substring(left);
+alert(" -- param : "+param);
+        XMLHttpRequestObject.send('data=' + data + '&type=write' + '&' + param);
+*/
+
+        var id, NetwkIP, cIpAddrByte, DRUdid, deviceMode ;  
+//+-----------------------
+//| rx the low byte of the IP address for IpAddrByte regarding MQ Frame Header
+//| see section 3.1 Frame Header @ DAU-Management Interface
+//+-----------------------
+        id = document.getElementById('NetwkIP') ;
+        if (id) {
+            NetwkIP = id.value; 
+        }
+        cIpAddrByte = NetwkIP.substr(0,NetwkIP.indexOf(".")) ;
+//debug    
+//alert("-- within wrDRUBsel, cIpAddrByte:"+cIpAddrByte+" - length:"+cIpAddrByte.length);
+
+// DRU device Id
+        id = document.getElementById('DRUdid') ;
+        if (id) {
+            DRUdid = id.value; 
+        }
+// DRU device Mode
+        id = document.getElementById('deviceMode') ;
+        if (id) {
+            deviceMode = id.value; 
+        }
+
+        XMLHttpRequestObject.send('data=' + data + '&type=write' + '&ip=' + cIpAddrByte + '&did=' + DRUdid + '&deviceMode='+deviceMode);
+    }    
+
+}
+
+//==============================================================================
+// function writeDRUNm is based on rwDAU.js::writeData()                        
+// caller : druConfig.html 
+// 
+// note : update to share the same routine for both DRU Name (type 1) and Reboot (type 0)
+//==============================================================================
+function writeDRUNm(dataSource, type) {
+
+    if (type==1) {
+        document.getElementById('druCfgMsg').innerHTML = "Updating DRU Name to device ... Please wait";
+    }
+    if (type==0) {
+        document.getElementById('druCfgMsg').innerHTML = "Rebooting DRU device        ... Please wait";
+    }
+    
+//+-----------------------------------------------------------------------------
+//| Check Browser and Open Ajax channel 
+//+-----------------------------------------------------------------------------
+    var XMLHttpRequestObject = false;
+    if (window.XMLHttpRequest) {
+        XMLHttpRequestObject = new XMLHttpRequest();
+    } else if (window.ActiveXObject) {
+        XMLHttpRequestObject = new ActiveXObject("Microsoft.XMLHTTP");
+    }
+    
+    if (XMLHttpRequestObject){
+ 	//+-------------------------------------------------------------------------------
+        //|  if use async=false, do NOT write an onreadystatechange function - just put the code after the send() statement:
+	//+-----------------------------------------------------------------------------
+	XMLHttpRequestObject.open("POST", dataSource);  //send the request synchronously 
+ 
+// + Debug 29.sep.2011
+//        alert(" within writeDRUCfg()- Ajax open channel ..." ) ; 
+//+-----------------------------------------------------------------------------
+//| Return Message Block 
+//+-----------------------------------------------------------------------------
+       XMLHttpRequestObject.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+        XMLHttpRequestObject.onreadystatechange = function() {
+            if (XMLHttpRequestObject.readyState == 4 &&
+              XMLHttpRequestObject.status == 200) {
+
+//        alert(" within writeDRUCfg()- Ajax open channel - responseText : " + XMLHttpRequestObject.responseText);
+//------------------------------------------------------------------------------
+// In terms of write, if SET is ok, notify but no message update
+//------------------------------------------------------------------------------
+              respDRUCfg(XMLHttpRequestObject.responseText);
+            }
+        }
+
+//-------------------------------------
+//| Work around for DRU-simulator as simulator only handles DRU IP Address 01 to 06
+//-------------------------------------
+//    var url = location.href;
+//    var theRequest = new Object();
+//    if (url.indexOf("?") != -1) {
+//        var str = url.substr(url.indexOf("?") + 1);
+//        strs = str.split("&");
+//        for (var i = 0; i < strs.length; i++) {
+//            theRequest[strs[i].split("=")[0]] = unescape(strs[i].split("=")[1]);
+//        }
+//    }
+//    deviceID = theRequest['did'];
+//    deviceMode = theRequest['deviceMode'];
+//    var bandId = (deviceMode.substr(0,3) == "DRU" ) ? 0x05 : deviceID ;
+//-------------------------------------
+// In terms of (General - no RF Band attached) DRU Name, Band ID is Zero (device unit)
+//-------------------------------------
+        var bandId = 0;
+        var targetID, showTest ; 
+        var oidArray = new Array();
+        var sArray   = new Array();
+        
+        //-----------------------------
+        // DRU name - 0x702  
+        //-----------------------------
+        if (type==1) {
+            oidArray[0] = 0x702;
+            targetID = '0x' + oidArray[0].toString(16); 
+            showTest = document.getElementById(targetID);
+            if (showTest){
+                sArray[0] = new Array(oidArray[0],showTest.value, bandId);
+            }
+        }
+        //-----------------------------
+        // Reboot - 0x703  
+        //-----------------------------
+        if (type==0) {
+            oidArray[0] = 0x703;
+            sArray[0] = new Array(oidArray[0],"", bandId);
+        }
+ 
+//-------------------------------------
+// + Debug - to dump array
+//var msg = " - SArray contents\n"; 
+//for(i=0;i<sArray.length;i++) { msg += sArray[i] + "\n"; }
+//alert(msg);
+//-------------------------------------
+        
+        var data = JSON.stringify(sArray);
+        //======================================================================
+        // Obtain the Station ID, Device ID amd Device Mode from caller         ???
+        //======================================================================
+/*        
+        var l = location.href;
+        var left = l.indexOf("?")+1;
+        var param = l.substring(left);
+        XMLHttpRequestObject.send('data=' + data + '&type=write' + '&' + param);
+*/
+
+        var id, NetwkIP, cIpAddrByte, DRUdid, deviceMode ;  
+//+-----------------------
+//| rx the low byte of the IP address for IpAddrByte regarding MQ Frame Header
+//| see section 3.1 Frame Header @ DAU-Management Interface
+//+-----------------------
+        id = document.getElementById('NetwkIP') ;
+        if (id) {
+            NetwkIP = id.value; 
+        }
+        cIpAddrByte = NetwkIP.substr(0,NetwkIP.indexOf(".")) ;
+//debug    
+//alert("-- within wrDRUBsel, cIpAddrByte:"+cIpAddrByte+" - length:"+cIpAddrByte.length);
+
+// DRU device Id
+        id = document.getElementById('DRUdid') ;
+        if (id) {
+            DRUdid = id.value; 
+        }
+// DRU device Mode
+        id = document.getElementById('deviceMode') ;
+        if (id) {
+            deviceMode = id.value; 
+        }
+        XMLHttpRequestObject.send('data=' + data + '&type=write' + '&ip=' + cIpAddrByte + '&did=' + DRUdid + '&deviceMode='+deviceMode);
+
+    }    
+}
+
+//==============================================================================
+// function respDRUCfg simply Aknowledges, no return content for update 
+// caller : writeDRUCfg()
+// 
+// note: as caller routine ONLY handles 0x702 (DRU device Name) or 0x703 (DRU Reboot)
+//       flag as error if return OID other than these
+//==============================================================================
+function respDRUCfg(responseText) {
+
+//alert(" -- within rspDAUBSet - responseText :"+ responseText);
+	var rData = JSON.parse(responseText);
+	var showTest, targetID, StgFlag ;
+        var StgRpt = cObjID = '';
+//alert(" -- within rspDAUBSet -- rData.length : " + rData.length) ;
+//alert(" -- OID is "+rData[0]['OID']);
+
+        cObjID = rData[0]['OID'];
+        switch(cObjID) {
+            //----------------
+            // DRU Device 
+            //----------------
+            case 0x702 : 
+            //----------------
+            // Reboot    
+            //----------------
+            case 0x703 : 
+                subBandString = rData[0]['Content'];
+//alert ("subBandString: " + subBandString);
+                StgFlag= rData[0]['Content'].toString(16) ;                     // Content
+                targetID = '0x' + rData[0]['OID'].toString(16);                 // Obj Id         
+                StgRpt = StgRpt + " ; field " + targetID + "-" + StgFlag + " " ;
+                break;
+            default:
+                targetID = '0x' + rData[0]['OID'].toString(16) 
+                StgRpt = StgRpt + " ; ** " + targetID + " RX error ! " ;
+        }
+        
+//---------------------------------
+// notify user what the outcome
+//---------------------------------
+    var dt = new Date();
+    document.getElementById('druCfgMsg').innerHTML = " result" + StgRpt + " - last Update: " + dt.toString();
+
+}
+
+//==============================================================================
+// function readData
+// callee : fillParas()
+//==============================================================================
+function readData(dataSource) {
+    document.getElementById('druCfgMsg').innerHTML = "Loading data from device...";
+
+//alert(" -- readData ... ");
+//+-----------------------------------------
+//| Check Browser and Open Ajax channel 
+//+-----------------------------------------
+    var XMLHttpRequestObject = false;
+    if (window.XMLHttpRequest) {
+        XMLHttpRequestObject = new XMLHttpRequest();
+    } else if (window.ActiveXObject) {
+        XMLHttpRequestObject = new ActiveXObject("Microsoft.XMLHTTP");
+    }
+    if (XMLHttpRequestObject) {
+        XMLHttpRequestObject.open("POST", dataSource);
+	    
+// + Debug 29.sep.2011
+//        alert(" within readData()- Ajax open channel for DRU ..." ) ; 
+//+-----------------------------------------
+//| Return Message Block 
+//+-----------------------------------------
+        XMLHttpRequestObject.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+        XMLHttpRequestObject.onreadystatechange = function() {
+            if (XMLHttpRequestObject.readyState == 4 &&
+              XMLHttpRequestObject.status == 200) {
+
+//alert(" -- within druConfig.html - readData() - Ajax open channel - responseText : " + XMLHttpRequestObject.responseText);
+                fillParas(XMLHttpRequestObject.responseText);
+		}
+        }
+
+        var oidArray= new Array();
+	oidArray[0] = 0x702;
+        var band    = 0;
+//+-----------------------------------------
+//| create the oid array with npCmd setting
+//| note: DAU Name - 0x702
+//|       BTS Sector Selection - 0x710
+//|       Interface Set up     - 0x711, 0x712, 0x717 
+//| - to be cntinued .... + Oct.31.2011     ???
+//+-----------------------------------------
+//        var oidArray = new Array(0x702, 0x710, 0x711, 0x712, 0x717);
+        var sArray = new Array;
+        var index = 0; //index for sArray
+        for (i = 0; i < oidArray.length; i++) {
+            var e = new Array(oidArray[i], band);
+            sArray[index] = e;
+            index++;
+        }
+
+//alert(" -- dump array of data send --\n");
+//var msg = "";
+//for(i=0;i<sArray.length;i++) { msg += sArray[i] + "\n"; }
+//alert(msg);
+
+        var data = JSON.stringify(sArray);
+//+-----------------------------------------
+//| rxParam() retrieves Device ID, StationID, Device Mode
+//+-----------------------------------------
+//        XMLHttpRequestObject.send('data=' + data + '&type=read' + '&sid=' + stationID + '&did=' + deviceID);
+        XMLHttpRequestObject.send('data=' + data + '&type=read&' + rxParam());
+
+//+-----------------------------------------
+//| Clean up existing Check Boxes 
+//+-----------------------------------------
+        for (i = 0; i < iBands; i++) {
+            document.getElementById(bandArray[i].name).checked = "";
+        }
+	
+    }
+}
+
+//==============================================================================
+//  function fillParas
+//==============================================================================
+function fillParas(responseText) {
+    
+// Debug + Oct.07.2011
+//alert(" -- within fillParas - responseText :"+ responseText);
+    var rData = JSON.parse(responseText);
+    var targetID;
+    var subBandString;
+    var StgRpt = "";	
+    
+//alert(" array length: " + rData.length) ;    
+
+    for (i = 0; i < rData.length; i++) {
+        switch (rData[i]['OID']) {
+//one DAU Name
+            case 0x702:
+// multiple BTS Sector Selection
+            case 0x710:
+                if (rData[i]['OID'] == 0x702) {
+                    targetID = '0x' + rData[i]['OID'].toString(16) ;
+                } else {
+                    targetID = '0x' + rData[i]['OID'].toString(16) + '_' + rData[i]['npCmd'].toString();
+                }
+ // content  
+                StgFlag= rData[i]['Content'].toString(16) ;
+//
+//alert("obj Id:"+targetID+" - content: "+StgFlag);
+                showTest = document.getElementById(targetID);
+                if (showTest) {
+                    showTest.value = rData[i]['Content'];
+                   StgRpt = StgRpt + " ; field " + targetID + "-ok ";
+                } else {
+//                  alert(" -- fillParas -- Data error:" + targetID);
+                    StgRpt = StgRpt + " ; field " + targetID + " RX error ! " ;
+                }
+                break;
+// + to be continued ???            
+            default:
+//                targetID = '0x' + rData[i]['OID'].toString(16) + '_' + rData[i]['npCmd'].toString();
+//                StgRpt = StgRpt + " ; ** " + targetID + " RX error ! " ;                
+//alert("obj Id:"+targetID+" - StgRpt: "+StgRpt);
+        }
+    }
+
+
+    // mark the updating time
+    var dt = new Date();
+    document.getElementById('druCfgMsg').innerHTML = "result: "+StgRpt+" - last Update: " + dt.toString();
+}
+
+
+</script>
+
+<!-- script language="javascript" type="text/javascript"></script  -->
+<link rel="stylesheet" type="text/css" href="style/device.css" />
+</head>
+
+<!-- body onload="test();" -->
+<body onload="initDRUCfg();">
+
+<table border="0" cellspacing="0" cellpadding="0"  > 
+    <tr><td><h1>DRU Configuration</h1></td><td>&nbsp;</td></tr>
+<!--  block to acknowledge user if the SET is successful   -->
+    <tr><td><div id= "druCfgMsg">&nbsp;</div></td></tr>
+</table>
+<!-- -->    
+<br>
+<div id = "msgDiv">
+    <table class="bandTable" border="1">
+        <tr>
+            <td>
+                <table>
+                    <tr>
+                        <td>DRU Name/Lable: <input id="0x702" name="DRU_Name" type="text" class="normalInupt"/></td>
+                        <td>&nbsp;</td>
+<!-- td><input id="Button1" type="button" value="SET" onclick = "writeDRUNm('php/rwnCfg2.php');"/></td  -->
+                        <td><input id="Button1" type="button" value="SET" onclick = "writeDRUNm('php/rwnCfg2.php',1);"/></td>
+                    </tr>
+                </table>
+            </td>
+            <td>
+                <table>
+                    <tr>
+                        <td><div id="DRUioType" style="font-weight:bold; font-size:100%">DRU type</div></td>
+                        <td>&nbsp;</td>
+<!-- td><input id="Button2" type="button" value="Reboot" onclick = "BootDRUCfg('php/rwnCfg2.php');"/></td  -->
+                        <td><input id="Button2" type="button" value="Reboot" onclick = "writeDRUNm('php/rwnCfg2.php',0);"/></td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+</div>
+
+<br/>
+<div>
+    <form name="drucfg" method="" action="">
+<!-- -->    
+        <table class="bandTable" border="1" >
+            <tr>
+                <td>
+<!----------------------------------------------------------------------- DRU Band 1 ----------------------------------------------------------------------->
+    <table>
+        <tr>
+            <td>&nbsp;</td>
+            <td>Band 1</td>
+            <td>&nbsp;</td>
+        </tr>
+        <tr>
+            <td>Freq:</td>
+            <td><div id="druRfBdTyp1" style="font-weight:bold; font-size:100%">RF band 1</div></td>
+            <td>&nbsp;</td>
+        </tr>
+        <tr>
+            <td>Pavr[W]:</td>
+            <td><div id="druPayr1" style="font-weight:bold; font-size:100%">payr 1</div></td>
+            <td>&nbsp;</td>
+        </tr>
+        <tr>
+            <td>BTS Sector Selection:</td>
+            <td>
+            <SELECT NAME="lstBTS1" SIZE="1"></SELECT>
+            </td>
+            <td>&nbsp;</td>
+        </tr>
+        <tr><td colspan="6"><input id="Button3" type="button" value="Set Parameters" onclick="setDRUBsel('php/rwnCfg2.php',1);"/></td></tr>
+    </table>
+<!-- -->
+                </td>
+                <td>
+<!----------------------------------------------------------------------- DRU Band 2 ----------------------------------------------------------------------->
+    <table>
+        <tr>
+            <td>&nbsp;</td>
+            <td>Band 2</td>
+            <td>&nbsp;</td>
+        </tr>
+        <tr>
+            <td>Freq:</td>
+            <td><div id="druRfBdTyp2" style="font-weight:bold; font-size:100%">RF band 2</div></td>
+            <td>&nbsp;</td>
+        </tr>
+        <tr>
+            <td>Pavr[W]:</td>
+            <td><div id="druPayr2" style="font-weight:bold; font-size:100%">payr 2</div></td>
+            <td>&nbsp;</td>
+        </tr>
+        <tr>
+            <td>BTS Sector Selection:</td>
+            <td>
+                <SELECT NAME="lstBTS2" SIZE="1">
+                </SELECT>
+            </td>
+            <td>&nbsp;</td>
+        </tr>
+        <tr><td colspan="6"><input id="Button4" type="button" value="Set Parameters" onclick="setDRUBsel('php/rwnCfg2.php',2);"/></td></tr>
+    </table>
+<!-- -->
+                </td>
+            </tr>
+        </table> 
+    </form>
+</div>
+<!----------------------------------------------  Block of Hidden fields holding param for DRU Cfg RF Band set + 22.Nov.2011 ------------------------------------------>
+<div class="container">    
+            <FORM NAME="druArv">
+<!-- DRU Device Id -->
+                <input id="DRUdid"     NAME="DRUdid"     type="hidden"/>
+<!-- DRU Device Mode-->                
+                <input id="deviceMode" NAME="deviceMode" type="hidden"/>
+<!-- DRU Network IP Address -->                
+                <input id="NetwkIP"    NAME="NetwkIP"    type="hidden"/>
+            </FORM>
+</div>
+<!--                                                                         -->
+</body>
+</html>
+
+

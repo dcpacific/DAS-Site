@@ -1,0 +1,58 @@
+*{    
+    font-family:"Calibri",monospace;
+}
+
+.readonlyInput{
+    background-color:#DCDCDC;
+    width:80px;
+}
+
+.normalInupt{
+    width:80px;
+}
+.noAlarm{
+    background-color:green;
+}
+
+.hasAlarm{
+    background-color:red;
+}
+
+.dualBandOnly{
+    visibility:hidden;
+}
+
+.bandTable{
+    border-collapse:collapse;
+    padding:"5";
+    margin:"0";
+    border:1px #7D7D7D solid;
+    width: 100%;
+}
+
+.bandTable td{
+    background-color:#C4E4FB;
+}
+
+.subBandTable{
+    border-collapse:collapse;
+    padding:"0";
+    margin:"0";
+    width: 100%;
+}
+
+.subBandTable td{
+    background-color:#C4E4FB;
+    text-align:center;
+}
+
+.talbe
+{
+    width:100%;
+    text-align:center;
+}
+
+/******IE6********/
+.readonlyInput{
+    *background-color:#DCDCDC;
+}

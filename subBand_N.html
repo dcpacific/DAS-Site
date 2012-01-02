@@ -1,0 +1,62 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Sirius Innovations Inc @ 2011</title>
+<script type = "text/javascript" src = "js/json2.js"></script>
+<script type = "text/javascript" src = "js/subBand.js"></script>
+<script language="javascript" type="text/javascript">
+
+</script>
+<link rel="stylesheet" type="text/css" href="style/device.css" />
+</head>
+
+<!--<body onload="GetRequest()">-->
+<body>
+<h1 id= "DeviceName">DAU Sub-Band Selection</h1>
+
+<div id = "Div1" >
+    <table class="bandTable" border="1">
+        <tr><td>DAU Name/Lable: <input id="DAU_Name" type="text" readonly="readonly" class="readonlyInput"/></td></tr>
+    </table>
+</div><br/>
+
+<table class="subBandTable" border="1">
+    <tr>
+        <td>&nbsp;</td>
+        <td>Frequency</td>
+        <td>Sub-Band Selection</td>
+    </tr>
+    <tr>
+        <td>Band 4:</td>
+        <td><input id="Text1" type="text" readonly="readonly" class="readonlyInput" value="AWS"/></td>
+        <td>
+            <table class="subBandTable" border="1" style= "width: 500px">
+        <tr>
+            <td style="width: 20%;"><input id="A" type="checkbox" onclick="checkAvalible();" /><br/>A</td>
+            <td style="width: 20%;"><input id="B" type="checkbox" onclick="checkAvalible();" /><br/>B</td>
+            <td colspan="2" style="width: 40%;">
+                <table class="subBandTable" border="1" style="width: 100%;">
+                    <tr>
+                        <td><input id="C" type="checkbox" onclick="checkAvalible();" /><br/>C</td>
+                        <td><input id="D" type="checkbox" onclick="checkAvalible();" /><br/>D</td>
+                        <td><input id="E" type="checkbox" onclick="checkAvalible();" /><br/>E</td>
+                    </tr>
+                </table>
+            </td>
+            <td style="width: 20%;"><input id="F" type="checkbox" onclick="checkAvalible();" /><br/>F</td>
+        </tr>
+    </table>
+        </td>
+    </tr>
+    <tr><td colspan="3">&nbsp;</td></tr>
+    <tr><td colspan="3">&nbsp;</td></tr>
+    <tr><td colspan="3">&nbsp;</td></tr>
+    <tr><td><input id="Button1" type="button" value="Set Band(s)" onclick = "writeData('php/rwParas.php')"/></td><td colspan="2"></td></tr>
+</table>
+
+</body>
+</html>
+
+

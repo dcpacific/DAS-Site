@@ -1,0 +1,412 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Sirius Innovations Inc @ 2011</title>
+
+<script type = "text/javascript" src = "js/json2.js"></script>
+<script type = "text/javascript" src = "js/DRU_loop.js"></script>
+<script type = "text/javascript" src = "js/alarm.js"></script>
+<script language="javascript" type="text/javascript">
+</script>
+<link rel="stylesheet" type="text/css" href="style/device.css" />
+<!--    <style type="text/css">
+        .style1
+        {
+            height: 22px;
+        }
+    </style>-->
+</head>
+
+<body onload="readAllParas()">
+<!--<body>-->
+<h1>This is the page for DRU</h1>
+<div id = "msgDiv" >Message</div><br/>
+
+<div id = "1">Band1:
+    <table style="width: 100%;">
+        <tr>
+            <td style="width: 33%;">
+                <table style="width: 100%;">
+                    <tr>
+                        <td>
+                            DL Attenuation:
+                        </td>
+                        <td><input id="0x440_1" type="text" />dB</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            DL System Gain:
+                        </td>
+                        <td>
+                            <input id="DLGain_1" type="text" readonly="readonly" class="readonlyInput"/>dB</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            UL Attenuation:
+                        </td>
+                        <td><input id="0x440_2" type="text" />dB</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            UL System Gain:
+                        </td>
+                        <td>
+                            <input id="ULGain_1" type="text" readonly="readonly" class="readonlyInput"/>dB</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            &nbsp;
+                        </td>
+                        <td>
+                            &nbsp;
+                        </td>
+                    </tr>
+                </table>
+            </td>
+            <td style="width: 33%;">
+                <table style="width: 100%;">
+                    <tr>
+                        <td>DL Output Power:</td>
+                        <td><input id="0x503_1" type="text" readonly="readonly" class="readonlyInput"/>dB</td>
+                    </tr>
+                    <tr>
+                        <td>UL Input Power:</td>
+                        <td><input id="0x5a7_1" type="text" readonly="readonly" class="readonlyInput"/>dB</td>
+                    </tr>
+                    <tr>
+                        <td>PA Temperature:</td>
+                        <td><input id="0x501_1" type="text" readonly="readonly" class="readonlyInput"/>°C</td>
+                    </tr>
+                    <tr>
+                        <td>DL VSWR:</td>
+                        <td><input id="0x506_1" type="text" readonly="readonly" class="readonlyInput"/></td>
+                    </tr>
+                    <tr>
+                        <td>DL VSWR Threshold:</td>
+                        <td><input id="0x450_1" type="text"/></td>
+                    </tr>
+                </table>
+            </td>
+            <td style="width: 34%;">
+                <table style="width: 100%;">
+                    <tr>
+                        <td>
+                            PA On/Off:
+                        </td>
+                        <td>
+                            <input id="0x402_1_on" name="0x402_1" type="radio" value="V1" />On
+                            <input id="0x402_1_off" name="0x402_1" type="radio" value="V1" />Off
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            UL On/Off:
+                        </td>
+                        <td>
+                            <input id="0x4cd_1_on" name="0x4cd_1" type="radio" value="V1" />On
+                            <input id="0x4cd_1_off" name="0x4cd_1" type="radio" value="V1" />Off
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            &nbsp;
+                        </td>
+                        <td>
+                            &nbsp;
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            &nbsp;
+                        </td>
+                        <td>
+                            &nbsp;
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Alarm:</td>
+                        <td>
+                            <a href="alarm.html" id="0x3ab_1">Status</a></td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+    <input id="Button2" type="button" value="Set Parameters" 
+    onclick = "writeData('php/rwParas.php', 1)"/>
+</div>  
+<p />
+
+<div id = "2">Band2:
+    <table style="width: 100%;">
+        <tr>
+            <td style="width: 33%;">
+                <table style="width: 100%;">
+                    <tr>
+                        <td>
+                            DL Attenuation:
+                        </td>
+                        <td><input id="0x440_3" type="text" />dB</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            DL System Gain:
+                        </td>
+                        <td>
+                            <input id="DLGain_2" type="text" readonly="readonly" class="readonlyInput"/>dB</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            UL Attenuation:
+                        </td>
+                        <td><input id="0x440_4" type="text" />dB</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            UL System Gain:
+                        </td>
+                        <td>
+                            <input id="ULGain_2" type="text" readonly="readonly" class="readonlyInput"/>dB</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            &nbsp;
+                        </td>
+                        <td>
+                            &nbsp;
+                        </td>
+                    </tr>
+                </table>
+            </td>
+            <td style="width: 33%;">
+                <table style="width: 100%;">
+                    <tr>
+                        <td>DL Output Power:</td>
+                        <td><input id="0x503_2" type="text" readonly="readonly" class="readonlyInput"/>dB</td>
+                    </tr>
+                    <tr>
+                        <td>UL Input Power:</td>
+                        <td><input id="0x5a7_2" type="text" readonly="readonly" class="readonlyInput"/>dB</td>
+                    </tr>
+                    <tr>
+                        <td>PA Temperature:</td>
+                        <td><input id="0x501_2" type="text" readonly="readonly" class="readonlyInput"/>°C</td>
+                    </tr>
+                    <tr>
+                        <td>DL VSWR:</td>
+                        <td><input id="0x506_2" type="text" readonly="readonly" class="readonlyInput"/></td>
+                    </tr>
+                    <tr>
+                        <td>DL VSWR Threshold:</td>
+                        <td><input id="0x450_2" type="text"/></td>
+                    </tr>
+                </table>
+            </td>
+            <td style="width: 34%;">
+                <table style="width: 100%;">
+                    <tr>
+                        <td>
+                            PA On/Off:
+                        </td>
+                        <td>
+                            <input id="0x402_2_on" name="0x402_2" type="radio" value="V1" />On
+                            <input id="0x402_2_off" name="0x402_2" type="radio" value="V1" />Off
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            UL On/Off:
+                        </td>
+                        <td>
+                            <input id="0x4cd_2_on" name="0x4cd_2" type="radio" value="V1" />On
+                            <input id="0x4cd_2_off" name="0x4cd_2" type="radio" value="V1" />Off
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            &nbsp;
+                        </td>
+                        <td>
+                            &nbsp;
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            &nbsp;
+                        </td>
+                        <td>
+                            &nbsp;
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Alarm:</td>
+                        <td>
+                            <a href="alarm.html" id="0x3ab_2">Status</a></td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+    <input id="Button1" type="button" value="Set Parameters" 
+    onclick = "writeData('php/rwParas.php', 2)"/>
+</div>  
+<p />
+
+<div id = "system">System:
+    <table style="width: 100%;">
+        <tr style="width: 33%;">
+            <td>
+                <table style="width: 100%;">
+                    <tr>
+                        <td>
+                            Optical Delay:
+                        </td>
+                        <td><input id="0x4a0_0" type="text"  readonly="readonly" class="readonlyInput"/>µs</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Delay Compensation:
+                        </td>
+                        <td>
+                <input id="0x4a1_0" type="text"/>µs</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            &nbsp;
+                        </td>
+                        <td>
+                            &nbsp;
+                        </td>
+                    </tr>
+                </table>
+            </td>
+            <td style="width: 33%;">
+                <table style="width: 100%;">
+                    <tr>
+                        <td>
+                            Serial Number:
+                        </td>
+                        <td><input id="0x5_0" type="text"  readonly="readonly" class="readonlyInput"/></td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Software Version:
+                        </td>
+                        <td><input id="0xa_0" type="text" class="readonlyInput" readonly="readonly"/></td>
+                    </tr>
+                    <tr>
+                        <td>
+                            &nbsp;
+                        </td>
+                        <td>
+                            &nbsp;
+                        </td>
+                    </tr>
+                </table>
+            </td>
+            <td style="width: 34%;">
+                <table style="width: 100%;">
+                    <tr>
+                        <td>M&C Status:</td>
+                        <td><div id="MCStatus">Ok</div></td>
+                    </tr>
+                    <tr>
+                        <td>
+                            &nbsp;
+                        </td>
+                        <td>
+                            &nbsp;
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Alarm:</td>
+                        <td><a href="alarm.html" id="0x3ab_0">Status</a></td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+</div>    
+
+
+
+
+
+<!-- old version -->
+<!-- old version -->
+<!-- old version -->
+<!-- old version -->
+<!-- old version -->
+<!-- old version -->
+<!-- old version -->
+
+<!--    <table style="width:100%;">
+        <tr>
+            <td>
+                UL Attenuation1:</td>
+            <td>
+                <input id="0x440_1_o" type="text" />dB</td>
+            <td>
+                &nbsp;</td>
+        </tr>
+        <tr>
+            <td>
+                UL Attenuation2:</td>
+            <td>
+                <input id="0x440_2_o" type="text"/>dB</td>
+            <td>
+                &nbsp;</td>
+        </tr>
+        <tr>
+            <td>
+                Optical Delay:</td>
+            <td>
+                <input id="0x4a0_1" type="text"/>dB</td>
+            <td>
+                &nbsp;</td>
+        </tr>
+        <tr>
+            <td>
+                Delay Compensation:</td>
+            <td>
+                <input id="0x4a1_1" type="text"/>dB</td>
+            <td>
+                &nbsp;</td>
+        </tr>
+        <tr>
+            <td>
+                DL Output Power Level:</td>
+            <td>
+                <input id="0x503_1" type="text"/>dB</td>
+            <td>
+                &nbsp;</td>
+        </tr>
+        <tr>
+            <td>
+                PA Temperature:</td>
+            <td>
+                <input id="0x501_1" type="text"/>dB</td>
+            <td>
+                &nbsp;</td>
+        </tr>
+        <tr>
+            <td>
+                DL VSWR:</td>
+            <td>
+                <input id="0x506_1" type="text"/>dB</td>
+            <td>
+                &nbsp;</td>
+        </tr>
+    </table>
+    
+    <input id="Button1" type="button" value="Set Parameters" 
+    onclick = "writeData('php/rwParas.php')"/>-->
+    
+</body>
+</html>
+
+
